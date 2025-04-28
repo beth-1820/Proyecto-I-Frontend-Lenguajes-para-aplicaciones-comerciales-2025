@@ -1,43 +1,33 @@
-/* src/app/app.component.css */
-
-/* === Barra de navegación ================================================= */
+/* =====  Barra de navegación global  ==================================== */
 .navbar {
   display: flex;
-  gap: 1.5rem;               /* separación entre botones */
-  padding: 0.8rem 1.2rem;
-  background-color: #0b4d96; /* azul oscuro del encabezado */
+  gap: 1.25rem;
+  padding: 0.9rem 1.2rem;
+  background: var(--clr-primary-700);
 }
 
-/* === Botones del navbar (clase nav-btn) ================================== */
 .nav-btn {
-  /* reset de estilos de button */
   background: none;
   border: none;
-  font: inherit;
-
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
   color: #ffffff;
   font-weight: 500;
-  padding: 0.45rem 0.9rem;
-  border-radius: 0.4rem;
-  cursor: pointer;                   /* mano al pasar */
-  transition: background-color 0.25s, box-shadow 0.25s;
+  cursor: pointer;
+  transition: background-color 0.25s;
 }
 
-/* estado hover */
 .nav-btn:hover {
-  background-color: rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.15);
 }
 
-/* estado activo (Angular añade .active cuando la ruta coincide) */
 .nav-btn.active {
-  background-color: #ffffff;
-  color: #0b4d96;
+  background: #ffffff;
+  color: var(--clr-primary-700);
   box-shadow: 0 0 0 2px #ffffff inset;
 }
 
-/* === Contenedor principal opcional (solo ejemplo) ======================== */
-.container {
-  max-width: 1240px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+.nav-btn:focus {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
 }

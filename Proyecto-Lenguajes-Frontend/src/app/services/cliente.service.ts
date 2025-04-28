@@ -32,6 +32,7 @@ export class ClienteService {
   actualizarCliente(c: Cliente): Observable<void> {
     return this.http.put<void>(`${this.url}/${c.idCliente}`, c);
   }
+  
 
   /** DELETE */
   eliminarCliente(id: number): Observable<void> {

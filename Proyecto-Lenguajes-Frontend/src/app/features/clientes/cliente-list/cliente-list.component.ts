@@ -1,38 +1,68 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { CommonModule }   from '@angular/common';
+import { FormsModule }    from '@angular/forms';
+import { RouterModule }   from '@angular/router';
+import { Observable, of } from 'rxjs';
 
 import { ClienteService } from '../../../services/cliente.service';
-import { Cliente } from '../../../domain/cliente.model';
+import { Cliente }        from '../../../domain/cliente.model';
 
 @Component({
-  standalone: true,
-  selector: 'app-cliente-list',
+  selector   : 'app-cliente-list',
+  standalone : true,
   templateUrl: './cliente-list.component.html',
-  styleUrls: ['./cliente-list.component.css'],
-  imports: [CommonModule, RouterModule]
+  styleUrls  : ['./cliente-list.component.css'],
+  imports    : [CommonModule, FormsModule, RouterModule]
 })
 export class ClienteListComponent implements OnInit {
 
-  /** flujo con todos los clientes */
-  clientes$!: Observable<Cliente[]>;   // solo declaramos, se asigna en ngOnInit
+  /* ───── Listado y búsqueda ───── */
+  private todos$!: Observable<Cliente[]>;
+  clientes$!: Observable<Cliente[]>;
+  idBuscado = '';
+  errorMsg  = '';
+
+  /* ───── Modal de detalle ───── */
+  clienteDetalle: Cliente | null = null;
 
   constructor(private svc: ClienteService) {}
 
   ngOnInit(): void {
-    // ahora ya existe this.svc → podemos usarlo
-    this.clientes$ = this.svc.getClientes();
+    this.todos$    = this.svc.getClientes();
+    this.clientes$ = this.todos$;
   }
 
-  eliminar(id: number): void {
-    if (confirm('¿Eliminar cliente?')) {
-      this.svc.eliminarCliente(id).subscribe(() => {
-        // refrescamos la lista después de borrar
-        this.clientes$ = this.svc.getClientes();
-      });
-    }
+  buscarPorId(): void {
+    const id = Number(this.idBuscado);
+    if (!id) { return; }
+
+    this.svc.getCliente(id).subscribe({
+      next : cli => {
+        this.clientes$       = of([cli]);
+        this.clienteDetalle  = null;
+        this.errorMsg        = '';
+      },
+      error: () => {
+        this.errorMsg        = `No existe cliente con ID ${id}`;
+        this.clientes$       = of([]);
+        this.clienteDetalle  = null;
+      }
+    });
   }
 
-  
+  restaurarLista(): void {
+    this.clientes$      = this.todos$;
+    this.errorMsg       = '';
+    this.clienteDetalle = null;
+    this.idBuscado      = '';
+  }
+
+  /* ───── Modal handlers ───── */
+  abrirDetalle(cli: Cliente): void { this.clienteDetalle = cli; }
+  cerrarDetalle(): void            { this.clienteDetalle = null; }
+  verMedidas(): void               { /* TODO: implementar navegación o diálogo */ }
+
+  /* Escape para cerrar */
+  @HostListener('document:keydown.escape')
+  onEsc() { this.cerrarDetalle(); }
 }
