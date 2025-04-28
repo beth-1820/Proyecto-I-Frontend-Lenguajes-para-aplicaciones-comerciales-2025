@@ -16,13 +16,11 @@ import { Cliente }        from '../../../domain/cliente.model';
 })
 export class ClienteListComponent implements OnInit {
 
-  /* ───── Listado y búsqueda ───── */
   private todos$!: Observable<Cliente[]>;
   clientes$!: Observable<Cliente[]>;
   idBuscado = '';
   errorMsg  = '';
 
-  /* ───── Modal de detalle ───── */
   clienteDetalle: Cliente | null = null;
 
   constructor(private svc: ClienteService) {}
@@ -34,18 +32,17 @@ export class ClienteListComponent implements OnInit {
 
   buscarPorId(): void {
     const id = Number(this.idBuscado);
-    if (!id) { return; }
-
+    if (!id) return;
     this.svc.getCliente(id).subscribe({
-      next : cli => {
-        this.clientes$       = of([cli]);
-        this.clienteDetalle  = null;
-        this.errorMsg        = '';
+      next: cli => {
+        this.clientes$      = of([cli]);
+        this.clienteDetalle = null;
+        this.errorMsg       = '';
       },
       error: () => {
-        this.errorMsg        = `No existe cliente con ID ${id}`;
-        this.clientes$       = of([]);
-        this.clienteDetalle  = null;
+        this.errorMsg       = `No existe cliente con ID ${id}`;
+        this.clientes$      = of([]);
+        this.clienteDetalle = null;
       }
     });
   }
@@ -57,12 +54,36 @@ export class ClienteListComponent implements OnInit {
     this.idBuscado      = '';
   }
 
-  /* ───── Modal handlers ───── */
-  abrirDetalle(cli: Cliente): void { this.clienteDetalle = cli; }
-  cerrarDetalle(): void            { this.clienteDetalle = null; }
-  verMedidas(): void               { /* TODO: implementar navegación o diálogo */ }
+  abrirDetalle(cli: Cliente): void {
+    this.clienteDetalle = cli;
+  }
 
-  /* Escape para cerrar */
+  cerrarDetalle(): void {
+    this.clienteDetalle = null;
+  }
+
+  /** ← NUEVO: elimina el cliente y recarga la lista */
+  eliminarDetalle(): void {
+    if (!this.clienteDetalle?.idCliente) return;
+    const id = this.clienteDetalle.idCliente;
+    this.svc.eliminarCliente(id).subscribe({
+      next: () => {
+        // refrescar lista tras borrar
+        this.todos$    = this.svc.getClientes();
+        this.clientes$ = this.todos$;
+        this.cerrarDetalle();
+      },
+      error: err => {
+        this.errorMsg = 'Error al eliminar: ' + err.message;
+      }
+    });
+  }
+
+  verMedidas(): void {
+    // Aquí luego puedes programar navegación, modal, etc.
+    console.log('Ver medidas (futuro)');
+  }
+  
   @HostListener('document:keydown.escape')
   onEsc() { this.cerrarDetalle(); }
 }

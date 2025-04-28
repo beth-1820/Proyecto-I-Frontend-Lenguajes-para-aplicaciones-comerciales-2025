@@ -40,9 +40,10 @@
   </table>
 </section>
 
-<!-- ───── Overlay de detalle ───── -->
+<!-- Overlay detalle -->
 <div *ngIf="clienteDetalle" class="overlay" (click)="cerrarDetalle()">
   <article class="card" (click)="$event.stopPropagation()">
+
     <button class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
 
     <header class="card-header">
@@ -61,7 +62,7 @@
     </ul>
 
     <footer class="acciones">
-      <!-- ambos azules -->
+      <button class="btn-danger" (click)="eliminarDetalle()">Eliminar</button>
       <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
       <button class="btn-primary" (click)="verMedidas()">Ver medidas</button>
     </footer>
