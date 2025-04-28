@@ -58,17 +58,11 @@ export class ClienteListComponent implements OnInit {
   }
 
   /* ───── Modal handlers ───── */
-  abrirDetalle(cli: Cliente): void {
-    this.clienteDetalle = cli;
-    /* OPCIONAL: mover foco al botón Cerrar
-       setTimeout(() => document.querySelector<HTMLButtonElement>('#btnClose')?.focus()); */
-  }
+  abrirDetalle(cli: Cliente): void { this.clienteDetalle = cli; }
+  cerrarDetalle(): void            { this.clienteDetalle = null; }
+  verMedidas(): void               { /* TODO: implementar navegación o diálogo */ }
 
-  cerrarDetalle(): void {
-    this.clienteDetalle = null;
-  }
-
-  /* Cerrar con tecla Escape */
+  /* Escape para cerrar */
   @HostListener('document:keydown.escape')
   onEsc() { this.cerrarDetalle(); }
 }

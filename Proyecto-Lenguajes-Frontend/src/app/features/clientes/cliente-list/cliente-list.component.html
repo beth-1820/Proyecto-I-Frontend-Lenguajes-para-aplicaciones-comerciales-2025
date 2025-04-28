@@ -3,29 +3,18 @@
 
   <!-- ───── Barra de búsqueda ───── -->
   <div class="buscador">
-    <input
-      type="number"
-      [(ngModel)]="idBuscado"
-      (keyup.enter)="buscarPorId()"
-      placeholder="ID del cliente" />
+    <input type="number"
+           [(ngModel)]="idBuscado"
+           (keyup.enter)="buscarPorId()"
+           placeholder="ID del cliente" />
 
+    <!-- ahora azul -->
     <button class="btn-primary" (click)="buscarPorId()">
-      <!-- ícono lupa -->
-      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2" />
-        <line x1="16.65" y1="16.65" x2="22" y2="22" stroke="currentColor" stroke-width="2" />
-      </svg>
       Buscar
     </button>
 
-    <button class="btn-outline" (click)="restaurarLista()">
-      <!-- ícono restaurar -->
-      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M4 4v6h6" fill="none" stroke="currentColor" stroke-width="2" />
-        <path d="M20 20v-6h-6" fill="none" stroke="currentColor" stroke-width="2" />
-        <path d="M4.93 19.07a9 9 0 0 0 12.73 0L20 16" fill="none" stroke="currentColor" stroke-width="2" />
-        <path d="M19.07 4.93a9 9 0 0 0-12.73 0L4 8" fill="none" stroke="currentColor" stroke-width="2" />
-      </svg>
+    <!-- ahora azul -->
+    <button class="btn-primary" (click)="restaurarLista()">
       Restaurar lista
     </button>
   </div>
@@ -54,19 +43,27 @@
 <!-- ───── Overlay de detalle ───── -->
 <div *ngIf="clienteDetalle" class="overlay" (click)="cerrarDetalle()">
   <article class="card" (click)="$event.stopPropagation()">
-    <button id="btnClose" class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
+    <button class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
 
-    <h3>{{ clienteDetalle.nombreCliente }} {{ clienteDetalle.apellidosCliente }}</h3>
-    <ul>
-      <li><strong>ID:</strong> {{ clienteDetalle.idCliente }}</li>
-      <li><strong>Fecha nac.:</strong> {{ clienteDetalle.fechaNacimiento | date }}</li>
-      <li><strong>Teléfono:</strong> {{ clienteDetalle.telefonoCliente }}</li>
-      <li><strong>Dirección:</strong> {{ clienteDetalle.direccion }}</li>
-      <li><strong>Contacto Emerg.:</strong>
+    <header class="card-header">
+      <h3>{{ clienteDetalle.nombreCliente }} {{ clienteDetalle.apellidosCliente }}</h3>
+      <p class="sub">{{ clienteDetalle.direccion }}</p>
+    </header>
+
+    <ul class="detalles">
+      <li><span>ID:</span> {{ clienteDetalle.idCliente }}</li>
+      <li><span>Fecha nac.:</span> {{ clienteDetalle.fechaNacimiento | date }}</li>
+      <li><span>Teléfono:</span> {{ clienteDetalle.telefonoCliente }}</li>
+      <li><span>Contacto Emerg.:</span>
           {{ clienteDetalle.nombreContactoEmergencia }}
-          ({{ clienteDetalle.telContactoEmergencia }})</li>
+          ({{ clienteDetalle.telContactoEmergencia }})
+      </li>
     </ul>
 
-    <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
+    <footer class="acciones">
+      <!-- ambos azules -->
+      <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
+      <button class="btn-primary" (click)="verMedidas()">Ver medidas</button>
+    </footer>
   </article>
 </div>
