@@ -1,14 +1,218 @@
-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-  th, td {
-    padding: 6px 10px;
-  }
-  th {
-    background-color: #e7eaff;
-  }
-  tr:nth-child(even) {
-    background-color: #f6f8ff;
+/* ============================================================
+   VARIABLES DE TEMA
+   ============================================================ */
+   :root {
+    --clr-primary-900: #06346d;
+    --clr-primary-700: #0b4d96;
+    --clr-primary-500: #2f6fe3;
+    --clr-primary-100: #e7eaff;
+  
+    --clr-neutral-50:  #f9fafc;
+    --clr-neutral-100: #f3f5fa;
+  
+    --radius: 0.5rem;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 3px 6px rgba(0, 0, 0, 0.12);
+  
+    font-family: "Inter", system-ui, sans-serif;
   }
   
+  /* ============================================================
+     CONTENEDOR PRINCIPAL
+     ============================================================ */
+  .listado {
+    background: var(--clr-neutral-50);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+  }
+  
+  /* título */
+  .listado h2 {
+    margin-bottom: 1rem;
+    color: var(--clr-primary-900);
+    font-size: 1.35rem;
+    font-weight: 600;
+  }
+  
+  /* ============================================================
+     BARRA DE BÚSQUEDA
+     ============================================================ */
+  .buscador {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  /* input */
+  .buscador input {
+    flex: 1 1 180px;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--clr-primary-500);
+    border-radius: var(--radius);
+    outline-offset: 2px;
+  }
+  
+  /* ============================================================
+     BOTONES
+     ============================================================ */
+  
+  /* ——— BASE ——— */
+  .buscador button {
+    flex: 0 0 auto;
+    min-width: 110px;
+    padding: 0.6rem 1.3rem;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;               /* entre ícono y texto */
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    transition:
+      transform 0.15s,
+      box-shadow 0.25s,
+      background-color 0.25s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.07);
+  }
+  
+  /* ——— PRIMARIO (azul degradado) ——— */
+  .btn-primary {
+    background: linear-gradient(
+      135deg,
+      var(--clr-primary-700),
+      var(--clr-primary-500)
+    );
+    color: #ffffff;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  }
+  .btn-primary:active {
+    transform: translateY(1px) scale(0.97);
+  }
+  
+  /* ——— SECUNDARIO (outline) ——— */
+  .btn-outline {
+    background: #ffffff;
+    color: var(--clr-primary-700);
+    border: 2px solid var(--clr-primary-500);
+  }
+  .btn-outline:hover {
+    background: var(--clr-primary-100);
+  }
+  .btn-outline:active {
+    transform: translateY(1px) scale(0.97);
+  }
+  
+  /* ============================================================
+     MENSAJE DE ERROR
+     ============================================================ */
+  .error {
+    margin-bottom: 0.75rem;
+    color: #de3030;
+    font-weight: 500;
+  }
+  
+  /* ============================================================
+     TABLA
+     ============================================================ */
+  .tabla {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+  
+  /* scroll horizontal en pantallas pequeñas */
+  @media (max-width: 480px) {
+    .tabla {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
+  
+  .tabla thead {
+    background: var(--clr-primary-100);
+  }
+  .tabla th,
+  .tabla td {
+    padding: 0.65rem 0.9rem;
+    text-align: left;
+  }
+  .tabla tr:nth-child(even) {
+    background: var(--clr-neutral-100);
+  }
+  
+  /* enlace “Detalle” */
+  .tabla a {
+    color: var(--clr-primary-700);
+    font-weight: 500;
+    text-decoration: none;
+    position: relative;
+  }
+  .tabla a::after {
+    content: "";
+    position: absolute;
+    inset: calc(100% - 2px) 0 0;
+    background: currentColor;
+    height: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s;
+  }
+  .tabla a:hover::after {
+    transform: scaleX(1);
+  }
+  
+  /* ============================================================
+     FOCUS VISIBLES
+     ============================================================ */
+  input:focus,
+  button:focus,
+  a:focus {
+    outline: 2px solid var(--clr-primary-500);
+    outline-offset: 2px;
+  }
+  
+  /* ───────── Overlay de detalle ───────── */
+.overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0 0 0 / .45);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+}
+.card{
+  background: #ffffff;
+  width: min(90vw, 420px);
+  padding: 1.5rem 2rem 2rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+.card h3{
+  margin-top: 0;
+  color: var(--clr-primary-700);
+}
+.card ul{
+  padding-left: 1.1rem;
+  margin: 0 0 1.25rem;
+}
+.close{
+  position: absolute;
+  right: .75rem;
+  top: .75rem;
+  background: none;
+  border: none;
+  font-size: 1.55rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.close:hover{color: var(--clr-primary-500);}
