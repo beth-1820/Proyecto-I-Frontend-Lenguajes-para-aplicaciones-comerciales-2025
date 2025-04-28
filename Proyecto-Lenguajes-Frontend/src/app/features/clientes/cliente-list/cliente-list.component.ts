@@ -34,7 +34,5 @@ export class ClienteListComponent implements OnInit {
     }
   }
 
-  botoncito(): void{
-    console.log("test")
-  }
+  
 }

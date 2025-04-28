@@ -1,54 +1,43 @@
-/* === PALETA === */
-:root{
-  --rosa-claro: #ffd4f0;      /* rosa pálido */
-  --rosa-medio: #ff8ddf;      /* rosa medio */
-  --rosa-fuerte:#ff4bc3;      /* rosa principal barra */
-  --texto-oscuro:#3a3a3a;
+/* src/app/app.component.css */
+
+/* === Barra de navegación ================================================= */
+.navbar {
+  display: flex;
+  gap: 1.5rem;               /* separación entre botones */
+  padding: 0.8rem 1.2rem;
+  background-color: #0b4d96; /* azul oscuro del encabezado */
 }
 
-/* === RESET BÁSICO === */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family: 'Inter', sans-serif;color:var(--texto-oscuro);}
+/* === Botones del navbar (clase nav-btn) ================================== */
+.nav-btn {
+  /* reset de estilos de button */
+  background: none;
+  border: none;
+  font: inherit;
 
-/* === FONDO GENERAL === */
-body{
-  /* gradiente radial central que se difumina a blanco */
-  background: radial-gradient(circle at top left,
-              var(--rosa-medio) 0%, var(--rosa-claro) 40%, #ffffff 90%);
-}
-
-/* === NAVBAR === */
-.navbar{
-  background: var(--rosa-fuerte);
-  padding:10px 20px;
-  display:flex;
-  gap:16px;
-}
-.navbar a{
-  color:#fff; text-decoration:none; font-weight:500;
-}
-.navbar a.active, .navbar a:hover{ text-decoration:underline; }
-
-/* === CONTENIDO PRINCIPAL === */
-.container{
-  max-width:900px;
-  margin:40px auto;
-  padding:32px 40px;
-  background:rgba(255,255,255,0.8);   /* blanco translúcido */
-  border-radius:16px;
-  box-shadow:0 6px 18px rgba(0,0,0,.1);
+  color: #ffffff;
+  font-weight: 500;
+  padding: 0.45rem 0.9rem;
+  border-radius: 0.4rem;
+  cursor: pointer;                   /* mano al pasar */
+  transition: background-color 0.25s, box-shadow 0.25s;
 }
 
-/* === FORMULARIOS & TABLAS === */
-input,select,textarea{
-  width:100%; padding:8px 10px; margin-bottom:14px;
-  border:1px solid #ccc; border-radius:6px;
+/* estado hover */
+.nav-btn:hover {
+  background-color: rgba(255, 255, 255, 0.18);
 }
-button{
-  padding:8px 14px; border:none; border-radius:6px;
-  background:var(--rosa-fuerte); color:#fff; cursor:pointer;
+
+/* estado activo (Angular añade .active cuando la ruta coincide) */
+.nav-btn.active {
+  background-color: #ffffff;
+  color: #0b4d96;
+  box-shadow: 0 0 0 2px #ffffff inset;
 }
-button:hover{filter:brightness(1.05)}
-table{width:100%; border-collapse:collapse; margin-top:12px}
-th,td{padding:8px;border-bottom:1px solid #e9e9e9}
-tr:hover td{background:rgba(255, 141, 223, .1)}
+
+/* === Contenedor principal opcional (solo ejemplo) ======================== */
+.container {
+  max-width: 1240px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}

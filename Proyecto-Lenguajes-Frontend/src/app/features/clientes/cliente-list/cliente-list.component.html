@@ -1,6 +1,5 @@
 <h2>Listado de Clientes</h2>
 
-<button (click)="botoncito()">eliminar</button>
 
 <select *ngIf="clientes$ | async as clientes">
   <option *ngFor="let c of clientes" [value]="c.idCliente">
