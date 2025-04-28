@@ -34,7 +34,7 @@
           class="form-control"
         >
           <option *ngFor="let c of categorias" [value]="c.codCategoria">
-            {{ c.nombreCategoria }}
+            {{ c.nombreCategoria }}  <!-- recorre y muestra las categorías existentes -->
           </option>
         </select>
       </div>
@@ -49,7 +49,7 @@
           class="form-control"
         >
           <option *ngFor="let e of equipos" [value]="e.codEquipo">
-            {{ e.nombreEquipo }}
+            {{ e.nombreEquipo }} <!-- recorre y muestra los equipos existentes -->
           </option>
         </select>
       </div>
