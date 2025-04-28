@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'; 
 import { Cliente } from '../../../domain/cliente.model';
 import { ClienteService } from '../../../services/cliente.service';
 import { Router } from '@angular/router';

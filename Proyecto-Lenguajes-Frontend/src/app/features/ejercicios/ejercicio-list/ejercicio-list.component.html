@@ -1,0 +1,38 @@
+<section class="container">
+    <h2>Listado de Ejercicios</h2>
+    <a routerLink="/ejercicios/nuevo" class="btn-primary">Nuevo Ejercicio</a>
+  
+    <table class="tabla" *ngIf="ejercicios$ | async as list">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Equipo</th>
+          <th style="width:200px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of list">
+          <td>{{ e.codEjercicio }}</td>
+          <td>{{ e.nombreEjercicio }}</td>
+          <td>{{ e.codCategoria }}</td>
+          <td>{{ e.codEquipo }}</td>
+          <td>
+            <a class="btn-link" [routerLink]="['/ejercicios/editar', e.codEjercicio]">
+              Editar
+            </a>
+            <button class="btn-danger" (click)="confirmEliminar(e.codEjercicio)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Toast -->
+    <div *ngIf="showToast" class="toast">
+      {{ feedbackMsg }}
+    </div>
+  </section>
+  

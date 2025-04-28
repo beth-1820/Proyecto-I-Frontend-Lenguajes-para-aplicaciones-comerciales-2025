@@ -1,0 +1,70 @@
+<section class="container">
+    <h2>{{ isEdit ? 'Editar' : 'Crear' }} Ejercicio</h2>
+  
+    <form #f="ngForm" (ngSubmit)="save()" novalidate>
+      <div class="form-group">
+        <label for="nombreEjercicio">Nombre:</label>
+        <input
+          id="nombreEjercicio"
+          name="nombreEjercicio"
+          required
+          [(ngModel)]="ejercicio.nombreEjercicio"
+          class="form-control"
+        />
+      </div>
+  
+      <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          required
+          [(ngModel)]="ejercicio.descripcion"
+          class="form-control"
+        ></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="categoriaSelect">Categoría:</label>
+        <select
+          id="categoriaSelect"
+          name="codCategoria"
+          required
+          [(ngModel)]="ejercicio.codCategoria"
+          class="form-control"
+        >
+          <option *ngFor="let c of categorias" [value]="c.codCategoria">
+            {{ c.nombreCategoria }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <label for="equipoSelect">Equipo:</label>
+        <select
+          id="equipoSelect"
+          name="codEquipo"
+          required
+          [(ngModel)]="ejercicio.codEquipo"
+          class="form-control"
+        >
+          <option *ngFor="let e of equipos" [value]="e.codEquipo">
+            {{ e.nombreEquipo }}
+          </option>
+        </select>
+      </div>
+  
+      <div class="form-group">
+        <button class="btn-primary" type="submit">
+          {{ isEdit ? 'Actualizar' : 'Crear' }}
+        </button>
+        <a class="btn-outline" routerLink="/ejercicios">Cancelar</a>
+      </div>
+    </form>
+  
+    <!-- Toast -->
+    <div *ngIf="showToast" class="toast">
+      {{ feedbackMsg }}
+    </div>
+  </section>
+  
