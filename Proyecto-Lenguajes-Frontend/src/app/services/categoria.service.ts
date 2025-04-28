@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CategoriaService {
-  private url: string = environment.API_URL + 'vitalitycenter/api/categorias';
+  private url: string = environment.API_URL + 'categorias';
 
   constructor(private http: HttpClient) { }
 
@@ -24,9 +24,7 @@ export class CategoriaService {
 
   /** POST nueva categoría */
   crearCategoria(categoria: Categoria): Observable<Categoria> {
-    return this.http.post<Categoria>(this.url, categoria, {
-      headers: { 'Content-Type': 'application/json' } // Asegura el header
-    });
+    return this.http.post<Categoria>(this.url, categoria);
   }
 
   /** PUT actualizar categoría */
