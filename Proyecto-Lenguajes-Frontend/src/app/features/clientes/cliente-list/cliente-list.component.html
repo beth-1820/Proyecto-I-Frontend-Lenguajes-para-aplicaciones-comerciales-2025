@@ -1,36 +1,32 @@
 <section class="listado">
   <h2>Listado de Clientes</h2>
 
-  <!-- ───── Barra de búsqueda ───── -->
+  <!-- Barra de búsqueda -->
   <div class="buscador">
-    <input type="number"
-           [(ngModel)]="idBuscado"
-           (keyup.enter)="buscarPorId()"
-           placeholder="ID del cliente" />
-
-    <!-- ahora azul -->
-    <button class="btn-primary" (click)="buscarPorId()">
-      Buscar
-    </button>
-
-    <!-- ahora azul -->
-    <button class="btn-primary" (click)="restaurarLista()">
-      Restaurar lista
-    </button>
+    <input
+      type="number"
+      [(ngModel)]="idBuscado"
+      (keyup.enter)="buscarPorId()"
+      placeholder="ID del cliente"
+    />
+    <button class="btn-primary" (click)="buscarPorId()">Buscar</button>
+    <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
   </div>
 
   <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
-  <!-- ───── Tabla ───── -->
+  <!-- Tabla con columna ID -->
   <table class="tabla" *ngIf="clientes$ | async as clientes">
     <thead>
       <tr>
+        <th>ID</th>
         <th>Nombre</th>
         <th style="width: 120px">Ver</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let c of clientes">
+        <td>{{ c.idCliente }}</td>
         <td>{{ c.nombreCliente }} {{ c.apellidosCliente }}</td>
         <td>
           <button class="btn-link" (click)="abrirDetalle(c)">Detalle</button>
@@ -40,10 +36,9 @@
   </table>
 </section>
 
-<!-- Overlay detalle -->
+<!-- Modal DETALLE -->
 <div *ngIf="clienteDetalle" class="overlay" (click)="cerrarDetalle()">
   <article class="card" (click)="$event.stopPropagation()">
-
     <button class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
 
     <header class="card-header">
@@ -55,9 +50,10 @@
       <li><span>ID:</span> {{ clienteDetalle.idCliente }}</li>
       <li><span>Fecha nac.:</span> {{ clienteDetalle.fechaNacimiento | date }}</li>
       <li><span>Teléfono:</span> {{ clienteDetalle.telefonoCliente }}</li>
-      <li><span>Contacto Emerg.:</span>
-          {{ clienteDetalle.nombreContactoEmergencia }}
-          ({{ clienteDetalle.telContactoEmergencia }})
+      <li>
+        <span>Contacto Emerg.:</span>
+        {{ clienteDetalle.nombreContactoEmergencia }}
+        ({{ clienteDetalle.telContactoEmergencia }})
       </li>
     </ul>
 
@@ -67,4 +63,38 @@
       <button class="btn-primary" (click)="verMedidas()">Ver medidas</button>
     </footer>
   </article>
+</div>
+
+<!-- Modal MEDIDAS -->
+<div *ngIf="showMedidasModal" class="overlay" (click)="cerrarMedidas()">
+  <article class="card" (click)="$event.stopPropagation()">
+    <button class="close" aria-label="Cerrar" (click)="cerrarMedidas()">×</button>
+
+    <header class="card-header">
+      <h3>Medidas Corporales</h3>
+    </header>
+
+    <ul class="medidas-list">
+      <li *ngFor="let m of medidasValores; let i = index">
+        <label>
+          {{ medidasLabels[i] }}:
+          <input
+            type="number"
+            [(ngModel)]="medidasValores[i].valor"
+            placeholder="cm"
+          />
+        </label>
+      </li>
+    </ul>
+
+    <footer class="acciones">
+      <button class="btn-primary" (click)="actualizarMedidas()">Guardar</button>
+      <button class="btn-outline" (click)="cerrarMedidas()">Cerrar</button>
+    </footer>
+  </article>
+</div>
+
+<!-- Toast de éxito -->
+<div *ngIf="showSuccess" class="toast">
+  ¡Guardado con éxito!
 </div>
