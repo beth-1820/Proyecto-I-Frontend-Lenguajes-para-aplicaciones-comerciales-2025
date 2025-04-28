@@ -1,0 +1,39 @@
+<h2>Registrar Cliente</h2>
+
+<!-- Interpolación de mensaje -->
+<p *ngIf="mensaje">{{ mensaje }}</p>
+
+<div class="form-container">
+  <!-- Data binding: ngModel enlaza cada propiedad del objeto -->
+  <label>Nombre:
+    <input [(ngModel)]="nuevoCliente.nombreCliente">
+  </label><br>
+
+  <label>Apellidos:
+    <input [(ngModel)]="nuevoCliente.apellidosCliente">
+  </label><br>
+
+  <label>Fecha Nacimiento:
+    <input type="date" [(ngModel)]="nuevoCliente.fechaNacimiento">
+  </label><br>
+
+  <label>Teléfono:
+    <input [(ngModel)]="nuevoCliente.telefonoCliente">
+  </label><br>
+
+  <label>Dirección:
+    <input [(ngModel)]="nuevoCliente.direccion">
+  </label><br>
+
+  <label>Nombre Contacto Emerg.:
+    <input [(ngModel)]="nuevoCliente.nombreContactoEmergencia">
+  </label><br>
+
+  <label>Tel. Contacto Emerg.:
+    <input [(ngModel)]="nuevoCliente.telContactoEmergencia">
+  </label><br><br>
+
+  <!-- event binding (click) como el slide -->
+  <button (click)="guardar()">Guardar</button>
+  <button (click)="limpiar()">Limpiar</button>
+</div>

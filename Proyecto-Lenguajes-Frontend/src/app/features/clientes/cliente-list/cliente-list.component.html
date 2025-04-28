@@ -1,0 +1,18 @@
+<h2>Listado de Clientes</h2>
+
+<button (click)="botoncito()">eliminar</button>
+
+<select *ngIf="clientes$ | async as clientes">
+  <option *ngFor="let c of clientes" [value]="c.idCliente">
+    {{ c.nombreCliente }} {{ c.apellidosCliente }}
+  </option>
+</select>
+
+<!-- Ejemplo tabla más completa -->
+<table *ngIf="clientes$ | async as clientes" border="1" cellpadding="4">
+  <tr><th>Nombre</th><th>Ver</th></tr>
+  <tr *ngFor="let c of clientes">
+    <td>{{ c.nombreCliente }} {{ c.apellidosCliente }}</td>
+    <td><a [routerLink]="['/clientes', c.idCliente]">Detalle</a></td>
+  </tr>
+</table>
