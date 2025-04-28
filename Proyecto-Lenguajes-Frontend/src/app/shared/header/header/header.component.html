@@ -1,0 +1,24 @@
+<!-- Mensaje de bienvenida -->
+<div class="welcome">
+    Welcome to Vitality Center Gym
+  </div>
+  
+  <!-- Barra de menú -->
+  <nav class="menu-bar">
+    <div class="menu-item" *ngFor="let item of menu">
+      <a (click)="selectMenu(item)" [class.active]="item === selectedMenu">
+        {{ item.title }}
+      </a>
+  
+      <!-- Dropdown de subitems -->
+      <div class="dropdown" *ngIf="item === selectedMenu">
+        <a *ngFor="let sub of item.subItems"
+           [routerLink]="sub.url"
+           routerLinkActive="active"
+           (click)="closeMenu()">
+          {{ sub.title }}
+        </a>
+      </div>
+    </div>
+  </nav>
+  
