@@ -1,0 +1,35 @@
+/* Aplica SOLO dentro de cliente-form */
+
+.form-container {
+    padding: 20px;
+    background-color: #f5f7ff;
+    border-radius: 8px;
+    max-width: 450px;
+  }
+  
+  label {
+    display: block;
+    margin: 6px 0;
+  }
+  
+  input {
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid #b4c0ff;
+    border-radius: 4px;
+  }
+  
+  button {
+    margin-right: 8px;
+    padding: 8px 14px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

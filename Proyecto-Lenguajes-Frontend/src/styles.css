@@ -1,1 +1,102 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================= */
+/*                 ESTILOS GLOBALES – PROYECTO LPAC              */
+/* ============================================================= */
+
+/* ---------- PALETA DE COLORES ---------- */
+:root{
+    --azul-claro : #d1e8ff;   /* celeste pálido para gradiente */
+    --azul-medio : #7abaff;   /* celeste medio                */
+    --azul-fuerte: #2979ff;   /* para botones                 */
+  
+    --azul-oscuro: #004c99;   /* COLOR NUEVO navbar           */
+  
+    --texto-oscuro:#263238;
+  }
+  
+  /* ---------- RESET BÁSICO ---------- */
+  *,*::before,*::after{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+  }
+  html,body{
+    height:100%;
+    font-family: Inter, sans-serif;
+    color:var(--texto-oscuro);
+  }
+  
+  /* ---------- FONDO GRADIENTE ---------- */
+  body{
+    background: radial-gradient(circle at top left,
+                var(--azul-medio) 0%,
+                var(--azul-claro) 40%,
+                #ffffff 90%);
+  }
+  
+  /* ---------- NAVBAR ---------- */
+  .navbar{
+    background: var(--azul-oscuro);   /* azul oscuro */
+    padding:10px 20px;
+    display:flex;
+    gap:16px;
+  }
+  .navbar a{
+    color:#fff;
+    margin-right:12px;
+    text-decoration:none;
+    font-weight:500;
+  }
+  .navbar a.active,
+  .navbar a:hover{
+    text-decoration:underline;
+  }
+
+  /* NAVBAR – azul oscuro forzado  */
+nav.navbar{
+    background:#004c99 !important;   /* ← usa el azul que quieras */
+  }
+  
+  
+  /* ---------- CONTENEDOR PRINCIPAL ---------- */
+  .container{
+    max-width:900px;
+    margin:40px auto;
+    padding:32px 40px;
+    background:rgba(255,255,255,0.85);   /* blanco translúcido */
+    border-radius:16px;
+    box-shadow:0 6px 18px rgba(0,0,0,.1);
+  }
+  
+  /* ---------- FORMULARIOS & TABLAS ---------- */
+  input,select,textarea{
+    width:100%;
+    padding:8px 10px;
+    margin-bottom:14px;
+    border:1px solid #b0c4de;
+    border-radius:6px;
+  }
+  button{
+    padding:8px 14px;
+    border:none;
+    border-radius:6px;
+    background:var(--azul-fuerte);
+    color:#fff;
+    cursor:pointer;
+  }
+  button:hover{ filter:brightness(1.05); }
+  
+  table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+  }
+  th,td{
+    padding:8px;
+    border-bottom:1px solid #e0e7f1;
+  }
+  tr:hover td{
+    background:rgba(122, 186, 255, .15);
+  }
+  
+  /* ============================================================= */
+  
