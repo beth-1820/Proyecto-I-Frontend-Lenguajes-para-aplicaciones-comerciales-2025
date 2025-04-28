@@ -216,3 +216,28 @@
   cursor: pointer;
 }
 .close:hover{color: var(--clr-primary-500);}
+
+/* botón Detalle tipo enlace */
+.btn-link{
+  background: none;
+  border: none;
+  color: var(--clr-primary-700);
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+}
+.btn-link::after{
+  content:'';
+  position:absolute;
+  inset: calc(100% - 2px) 0 0;
+  background: currentColor;
+  height:2px;
+  transform: scaleX(0);
+  transform-origin:left;
+  transition: transform .25s;
+}
+.btn-link:hover::after{ transform: scaleX(1); }
+.btn-link:focus{
+  outline:2px solid var(--clr-primary-500);
+  outline-offset:2px;
+}

@@ -1,88 +1,38 @@
 <section class="listado">
   <h2>Listado de Clientes</h2>
 
-  <!-- Barra de búsqueda -->
+  <!-- ───── Barra de búsqueda ───── -->
   <div class="buscador">
     <input
       type="number"
       [(ngModel)]="idBuscado"
       (keyup.enter)="buscarPorId()"
-      placeholder="ID del cliente"
-    />
+      placeholder="ID del cliente" />
 
-    <!-- Botón Buscar -->
-    <button (click)="buscarPorId()">
-      <!-- icono lupa (opcional) -->
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <circle
-          cx="11"
-          cy="11"
-          r="7"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <line
-          x1="16.65"
-          y1="16.65"
-          x2="22"
-          y2="22"
-          stroke="currentColor"
-          stroke-width="2"
-        />
+    <button class="btn-primary" (click)="buscarPorId()">
+      <!-- ícono lupa -->
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2" />
+        <line x1="16.65" y1="16.65" x2="22" y2="22" stroke="currentColor" stroke-width="2" />
       </svg>
       Buscar
     </button>
 
-    <!-- Botón Restaurar -->
-    <button (click)="restaurarLista()">
-      <!-- icono flecha circular (opcional) -->
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path
-          d="M4 4v6h6"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <path
-          d="M20 20v-6h-6"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <path
-          d="M4.93 19.07a9 9 0 0 0 12.73 0L20 16"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <path
-          d="M19.07 4.93a9 9 0 0 0-12.73 0L4 8"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        />
+    <button class="btn-outline" (click)="restaurarLista()">
+      <!-- ícono restaurar -->
+      <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M4 4v6h6" fill="none" stroke="currentColor" stroke-width="2" />
+        <path d="M20 20v-6h-6" fill="none" stroke="currentColor" stroke-width="2" />
+        <path d="M4.93 19.07a9 9 0 0 0 12.73 0L20 16" fill="none" stroke="currentColor" stroke-width="2" />
+        <path d="M19.07 4.93a9 9 0 0 0-12.73 0L4 8" fill="none" stroke="currentColor" stroke-width="2" />
       </svg>
       Restaurar lista
     </button>
   </div>
 
-  <!-- mensaje de error -->
   <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
-  <!-- tabla -->
+  <!-- ───── Tabla ───── -->
   <table class="tabla" *ngIf="clientes$ | async as clientes">
     <thead>
       <tr>
@@ -94,9 +44,29 @@
       <tr *ngFor="let c of clientes">
         <td>{{ c.nombreCliente }} {{ c.apellidosCliente }}</td>
         <td>
-          <a [routerLink]="['/clientes', c.idCliente]">Detalle</a>
+          <button class="btn-link" (click)="abrirDetalle(c)">Detalle</button>
         </td>
       </tr>
     </tbody>
   </table>
 </section>
+
+<!-- ───── Overlay de detalle ───── -->
+<div *ngIf="clienteDetalle" class="overlay" (click)="cerrarDetalle()">
+  <article class="card" (click)="$event.stopPropagation()">
+    <button id="btnClose" class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
+
+    <h3>{{ clienteDetalle.nombreCliente }} {{ clienteDetalle.apellidosCliente }}</h3>
+    <ul>
+      <li><strong>ID:</strong> {{ clienteDetalle.idCliente }}</li>
+      <li><strong>Fecha nac.:</strong> {{ clienteDetalle.fechaNacimiento | date }}</li>
+      <li><strong>Teléfono:</strong> {{ clienteDetalle.telefonoCliente }}</li>
+      <li><strong>Dirección:</strong> {{ clienteDetalle.direccion }}</li>
+      <li><strong>Contacto Emerg.:</strong>
+          {{ clienteDetalle.nombreContactoEmergencia }}
+          ({{ clienteDetalle.telContactoEmergencia }})</li>
+    </ul>
+
+    <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
+  </article>
+</div>
