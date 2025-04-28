@@ -1,0 +1,60 @@
+<section class="listado">
+  <h2>Listado de Categorías</h2>
+
+  <!-- ───── Barra de búsqueda ───── -->
+  <div class="buscador">
+    <input type="number"
+           [(ngModel)]="idBuscado"
+           (keyup.enter)="buscarPorId()"
+           placeholder="ID de la categoría" />
+
+    <button class="btn-primary" (click)="buscarPorId()">
+      Buscar
+    </button>
+
+    <button class="btn-primary" (click)="restaurarLista()">
+      Restaurar lista
+    </button>
+  </div>
+
+  <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+  <!-- ───── Tabla ───── -->
+  <table class="tabla" *ngIf="categorias$ | async as categorias">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th style="width: 120px">Ver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of categorias">
+        <td>{{ c.nombreCategoria }}</td>
+        <td>
+          <button class="btn-link" (click)="abrirDetalle(c)">Detalle</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Overlay detalle -->
+<div *ngIf="categoriaDetalle" class="overlay" (click)="cerrarDetalle()">
+  <article class="card" (click)="$event.stopPropagation()">
+
+    <button class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
+
+    <header class="card-header">
+      <h3>{{ categoriaDetalle.nombreCategoria }}</h3>
+    </header>
+
+    <ul class="detalles">
+      <li><span>ID:</span> {{ categoriaDetalle.codCategoria }}</li>
+    </ul>
+
+    <footer class="acciones">
+      <button class="btn-danger" (click)="eliminarDetalle()">Eliminar</button>
+      <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
+    </footer>
+  </article>
+</div>

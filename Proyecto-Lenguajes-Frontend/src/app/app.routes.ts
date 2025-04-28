@@ -4,8 +4,11 @@ import { ClienteListComponent }    from './features/clientes/cliente-list/client
 import { ClienteFormComponent }    from './features/clientes/cliente-form/cliente-form.component';
 import { EjercicioListComponent }  from './features/ejercicios/ejercicio-list/ejercicio-list.component';
 import { EjercicioDetailComponent }from './features/ejercicios/ejercicio-detail/ejercicio-detail.component';
+import { CategoriaListComponent } from './features/categorias/buscar-categoria/buscar-categoria.component';
+import { CrearCategoriaComponent } from './features/categorias/crear-categoria/crear-categoria.component';
 
 export const routes: Routes = [
+  //NO CAMBIAR EL ORDEN
   { path: 'clientes',        component: ClienteListComponent },
   { path: 'clientes/nuevo',  component: ClienteFormComponent },
 
@@ -13,5 +16,8 @@ export const routes: Routes = [
   { path: 'ejercicios/nuevo',      component: EjercicioDetailComponent },
   { path: 'ejercicios/editar/:id', component: EjercicioDetailComponent },
 
-  { path: '', redirectTo: 'clientes', pathMatch: 'full' }
+  { path: 'categorias/listado', component: CategoriaListComponent},
+  { path: 'categorias/nuevo', component: CrearCategoriaComponent},
+
+  { path: '', redirectTo: '', pathMatch: 'full' }
 ];

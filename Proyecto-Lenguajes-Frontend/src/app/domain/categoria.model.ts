@@ -1,10 +1,12 @@
 export class Categoria {
-    codCategoria:number=0;
-    nombreCategoria:String;
- 
+    codCategoria?: number;
+    nombreCategoria?: string;
 
-    constructor (codCategoria:number,nombreCategoria:String){
+    constructor(
+        codCategoria?: number,
+        nombreCategoria?: string
+    ) {
         this.codCategoria = codCategoria;
         this.nombreCategoria = nombreCategoria;
-    }
+    } 
 }

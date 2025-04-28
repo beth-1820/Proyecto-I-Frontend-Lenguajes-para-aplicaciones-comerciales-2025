@@ -13,15 +13,15 @@ private menu: MenuNavigation[]= [
   {
     title: 'Catálogo de categorías',
     icon: '',
-    url: 'categoria',
+    url: 'categorias',
     subItems: [
       {
-        title:'Buscar categoria',
-        url:'buscarCategorias/ver',
+        title:'Buscar Categoría',
+        url:'categorias/listado',
       },
       {
-        title:'Crear Categorías',
-        url:'crear/ver',
+        title:'Crear Categoría',
+        url:'categorias/nuevo',
       }
     ]
 
@@ -73,8 +73,7 @@ private menu: MenuNavigation[]= [
         url: 'clientes/nuevo',  // formulario para crear cliente
       },
     ]
-  }
-  
+  } 
 ]
 
   getMenu():MenuNavigation[]{
