@@ -33,11 +33,11 @@ private menu: MenuNavigation[]= [
     subItems: [
       {
         title:'Buscar Ejercicio',
-        url:'buscarEjercicio/ver',
+        url:'ejercicios',
       },
       {
         title:'Crear Ejercicio',
-        url:'crearEjercicio/ver',
+        url:'ejercicios/nuevo',
       }
 
     ]
@@ -73,8 +73,7 @@ private menu: MenuNavigation[]= [
         url: 'clientes/nuevo',  // formulario para crear cliente
       },
     ]
-  }
-  
+  } 
 ]
 
   getMenu():MenuNavigation[]{

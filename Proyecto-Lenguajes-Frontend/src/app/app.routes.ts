@@ -6,6 +6,7 @@ import { EjercicioListComponent }  from './features/ejercicios/ejercicio-list/ej
 import { EjercicioDetailComponent }from './features/ejercicios/ejercicio-detail/ejercicio-detail.component';
 
 export const routes: Routes = [
+  //NO CAMBIAR EL ORDEN
   { path: 'clientes',        component: ClienteListComponent },
   { path: 'clientes/nuevo',  component: ClienteFormComponent },
 
@@ -13,5 +14,5 @@ export const routes: Routes = [
   { path: 'ejercicios/nuevo',      component: EjercicioDetailComponent },
   { path: 'ejercicios/editar/:id', component: EjercicioDetailComponent },
 
-  { path: '', redirectTo: 'clientes', pathMatch: 'full' }
+  { path: '', redirectTo: '', pathMatch: 'full' }
 ];
