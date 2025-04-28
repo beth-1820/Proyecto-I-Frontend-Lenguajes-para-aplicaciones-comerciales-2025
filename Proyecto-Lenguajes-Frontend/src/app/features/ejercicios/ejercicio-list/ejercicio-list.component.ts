@@ -1,83 +1,57 @@
-import { Component, OnInit, HostListener } from '@angular/core';
-import { CommonModule }   from '@angular/common';
-import { FormsModule }    from '@angular/forms';
-import { RouterModule }   from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule }      from '@angular/common';
+import { RouterModule }      from '@angular/router';
+import { Observable, of }    from 'rxjs';
+import { delay, tap, switchMap } from 'rxjs/operators';
 
-import { EjercicioService } from '../../../services/ejercicio.service';
-import { Ejercicio }        from '../../../domain/ejercicio.model';
+import { EjercicioService }  from '../../../services/ejercicio.service';
+import { Ejercicio }         from '../../../domain/ejercicio.model';
 
 @Component({
-  selector: 'app-ejercicio-list',
-  standalone: true,
+  standalone : true,
+  selector   : 'app-ejercicio-list',
+  imports    : [CommonModule, RouterModule],
   templateUrl: './ejercicio-list.component.html',
-  styleUrls: ['./ejercicio-list.component.css'],
-  imports: [CommonModule, FormsModule, RouterModule]
+  styleUrls  : ['./ejercicio-list.component.css']
 })
 export class EjercicioListComponent implements OnInit {
-
-  private todos$!: Observable<Ejercicio[]>;
   ejercicios$!: Observable<Ejercicio[]>;
-  idBuscado = '';
-  errorMsg  = '';
-
-  ejercicioDetalle: Ejercicio | null = null;
+  feedbackMsg = '';
+  showToast   = false;
 
   constructor(private svc: EjercicioService) {}
 
   ngOnInit(): void {
-    this.todos$ = this.svc.getEjercicios();
-    this.ejercicios$ = this.todos$;
+    this.loadAll();
   }
 
-  buscarPorId(): void {
-    const id = Number(this.idBuscado);
-    if (!id) return;
-    this.svc.getEjercicio(id).subscribe({
-      next: ej => {
-        this.ejercicios$ = of([ej]);
-        this.ejercicioDetalle = null;
-        this.errorMsg = '';
-      },
-      error: () => {
-        this.errorMsg = `No existe ejercicio con ID ${id}`;
-        this.ejercicios$ = of([]);
-        this.ejercicioDetalle = null;
-      }
-    });
+  private loadAll() {
+    this.ejercicios$ = this.svc.getEjercicios();
   }
 
-  restaurarLista(): void {
-    this.ejercicios$ = this.todos$;
-    this.errorMsg = '';
-    this.ejercicioDetalle = null;
-    this.idBuscado = '';
-  }
+  confirmEliminar(id: number): void {
+    if (!confirm('¿Eliminar este ejercicio?')) return;
 
-  abrirDetalle(ej: Ejercicio): void {
-    this.ejercicioDetalle = ej;
+    this.svc.eliminarEjercicio(id)
+      .pipe(
+        tap(() => {
+          this.feedbackMsg = 'Ejercicio eliminado ✅';
+          this.showToast = true;
+        }),
+        // refresca lista tras eliminar
+        switchMap(() => this.svc.getEjercicios()),
+        // oculta el toast al cabo de 2s
+        tap(() => setTimeout(() => this.showToast = false, 2000))
+      )
+      .subscribe({
+        next: list => {
+          this.ejercicios$ = of(list);
+        },
+        error: err => {
+          this.feedbackMsg = 'Error al eliminar: ' + err.message;
+          this.showToast = true;
+          setTimeout(() => this.showToast = false, 2000);
+        }
+      });
   }
-
-  cerrarDetalle(): void {
-    this.ejercicioDetalle = null;
-  }
-
-  eliminarDetalle(): void {
-    if (!this.ejercicioDetalle?.codEjercicio) return;
-    const id = this.ejercicioDetalle.codEjercicio;
-    this.svc.eliminarEjercicio(id).subscribe({
-      next: () => {
-        // refrescar lista tras borrar
-        this.todos$ = this.svc.getEjercicios();
-        this.ejercicios$ = this.todos$;
-        this.cerrarDetalle();
-      },
-      error: err => {
-        this.errorMsg = 'Error al eliminar: ' + err.message;
-      }
-    });
-  }
-
-  @HostListener('document:keydown.escape')
-  onEsc() { this.cerrarDetalle(); }
 }

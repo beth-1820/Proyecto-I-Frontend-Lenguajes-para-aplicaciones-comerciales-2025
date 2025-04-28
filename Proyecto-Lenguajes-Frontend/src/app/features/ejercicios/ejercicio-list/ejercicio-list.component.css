@@ -1,106 +1,49 @@
-.container {
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 20px;
-    background-color: #fafafa;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  h1 {
-    text-align: center;
-    color: #333;
-  }
-  
-  .search-bar {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .search-bar input {
-    padding: 8px;
-    width: 200px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-  }
-  
-  .search-bar button {
-    padding: 8px 12px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .search-bar button:hover {
-    background-color: #0056b3;
-  }
-  
-  .error-message {
-    color: red;
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  
-  .exercise-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .exercise-list li {
-    padding: 10px;
-    background-color: #e9ecef;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .exercise-list li:hover {
-    background-color: #ced4da;
-  }
-  
-  .exercise-name {
-    font-weight: bold;
-  }
-  
-  .detail-panel {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #fff3cd;
-    border: 1px solid #ffeeba;
-    border-radius: 8px;
-  }
-  
-  .detail-buttons {
-    margin-top: 20px;
-    display: flex;
-    gap: 10px;
-  }
-  
-  .detail-buttons button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .detail-buttons button:first-child {
-    background-color: #dc3545;
-    color: white;
-  }
-  
-  .detail-buttons button:last-child {
-    background-color: #6c757d;
-    color: white;
-  }
-  
-  .detail-buttons button:hover {
-    opacity: 0.8;
-  }
-  
+.container { padding:1rem; }
+.tabla {
+  width:100%; border-collapse:collapse;
+}
+.tabla th, .tabla td {
+  padding:.5rem; border:1px solid #ddd;
+}
+.btn-link {
+  margin-right:.5rem;
+  color:#2f6fe3;
+  text-decoration:none;
+}
+.btn-link:hover {
+  text-decoration:underline;
+}
+.btn-primary {
+  display:inline-block;
+  margin-bottom:1rem;
+  padding:.5rem 1rem;
+  background:#2f6fe3;
+  color:#fff;
+  border-radius:.25rem;
+  text-decoration:none;
+}
+.btn-danger {
+  padding:.25rem .5rem;
+  background:#dc3545;
+  color:#fff;
+  border:none;
+  border-radius:.25rem;
+  cursor:pointer;
+}
+.btn-danger:hover {
+  background:#c82333;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  background: #2f6fe3;
+  color: #fff;
+  padding: .75rem 1.25rem;
+  border-radius: .5rem;
+  box-shadow: 0 3px 6px rgba(0,0,0,.15);
+  font-weight: 600;
+  z-index: 1000;
+}

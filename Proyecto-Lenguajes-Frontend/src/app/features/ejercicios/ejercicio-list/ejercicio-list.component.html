@@ -1,40 +1,38 @@
-<div class="container">
-
-    <h1>Lista de Ejercicios</h1>
+<section class="container">
+    <h2>Listado de Ejercicios</h2>
+    <a routerLink="/ejercicios/nuevo" class="btn-primary">Nuevo Ejercicio</a>
   
-    <!-- Búsqueda por ID -->
-    <div class="search-bar">
-      <input type="text" [(ngModel)]="idBuscado" placeholder="Buscar por ID..." />
-      <button (click)="buscarPorId()">Buscar</button>
-      <button (click)="restaurarLista()">Mostrar todos</button>
+    <table class="tabla" *ngIf="ejercicios$ | async as list">
+      <thead>
+        <tr>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Equipo</th>
+          <th style="width:200px">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of list">
+          <td>{{ e.codEjercicio }}</td>
+          <td>{{ e.nombreEjercicio }}</td>
+          <td>{{ e.codCategoria }}</td>
+          <td>{{ e.codEquipo }}</td>
+          <td>
+            <a class="btn-link" [routerLink]="['/ejercicios/editar', e.codEjercicio]">
+              Editar
+            </a>
+            <button class="btn-danger" (click)="confirmEliminar(e.codEjercicio)">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <!-- Toast -->
+    <div *ngIf="showToast" class="toast">
+      {{ feedbackMsg }}
     </div>
-  
-    <!-- Mensaje de error -->
-    <div *ngIf="errorMsg" class="error-message">{{ errorMsg }}</div>
-  
-    <!-- Lista de ejercicios -->
-    <ul class="exercise-list">
-      <li *ngFor="let ejercicio of ejercicios$ | async" (click)="abrirDetalle(ejercicio)">
-        <span class="exercise-name">{{ ejercicio.nombreEjercicio }}</span>
-        <span class="exercise-id">[ID: {{ ejercicio.codEjercicio }}]</span>
-      </li>
-    </ul>
-  
-    <!-- Detalle de un ejercicio -->
-    <div *ngIf="ejercicioDetalle" class="detail-panel">
-      <h2>Detalle de Ejercicio</h2>
-  
-      <p><strong>ID:</strong> {{ ejercicioDetalle.codEjercicio }}</p>
-      <p><strong>Nombre:</strong> {{ ejercicioDetalle.nombreEjercicio }}</p>
-      <p><strong>Descripción:</strong> {{ ejercicioDetalle.descripcion }}</p>
-      <p><strong>ID Categoría:</strong> {{ ejercicioDetalle.codCategoria }}</p>
-      <p><strong>ID Equipo:</strong> {{ ejercicioDetalle.codEquipo }}</p>
-  
-      <div class="detail-buttons">
-        <button (click)="eliminarDetalle()">Eliminar</button>
-        <button (click)="cerrarDetalle()">Cerrar</button>
-      </div>
-    </div>
-  
-  </div>
+  </section>
   
