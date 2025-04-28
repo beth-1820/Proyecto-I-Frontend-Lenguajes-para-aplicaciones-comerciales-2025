@@ -1,0 +1,15 @@
+<nav class="menu-container">
+  <ul class="main-menu">
+    <li *ngFor="let item of menuItems; let i = index" 
+        [class.active]="activeMenu === i"
+        (mouseenter)="toggleMenu(i)"
+        (mouseleave)="toggleMenu(i)">
+      <a class="menu-title">{{item.title}}</a>
+      <ul class="sub-menu" *ngIf="activeMenu === i">
+        <li *ngFor="let subItem of item.subItems">
+          <a [routerLink]="subItem.route">{{subItem.label}}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</nav>
