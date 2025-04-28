@@ -5,7 +5,9 @@ export class Ejercicio {
     codCategoria:number=0;
     codEquipo:number=0;
 
-    constructor (codEjercicio:number,nombreEjercicio:String,descripcion:String,codCategoria:number,codEquipo:number){
+    constructor (
+        codEjercicio:number,nombreEjercicio:String,descripcion:String,codCategoria:number,codEquipo:number
+    ) {
         this.codEjercicio = codEjercicio;
         this.nombreEjercicio = nombreEjercicio;
         this.descripcion = descripcion;
