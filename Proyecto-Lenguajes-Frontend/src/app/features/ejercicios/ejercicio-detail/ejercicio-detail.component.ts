@@ -1,38 +1,43 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { EjercicioService } from '../../../services/ejercicio.service';
+import { Ejercicio } from '../../../domain/ejercicio.model';
+import { Categoria } from '../../../domain/categoria.model';
 import { Router } from '@angular/router';
 
-import { Ejercicio } from '../../../domain/ejercicio.model'; // <- tu modelo de Ejercicio
-import { EjercicioService } from '../../../services/ejercicio.service'; // <- tu servicio de Ejercicio
-
 @Component({
-  standalone: true,
   selector: 'app-ejercicio-detail',
   templateUrl: './ejercicio-detail.component.html',
-  styleUrls: ['./ejercicio-detail.component.css'],
-  imports: [CommonModule, FormsModule]
+  styleUrls: ['./ejercicio-detail.component.css']
 })
-export class EjercicioDetailComponent {
+export class EjercicioDetailComponent implements OnInit {
 
-  nuevoEjercicio: Ejercicio = new Ejercicio();   // Modelo ligado al formulario
-  mensaje = '';                                 // Feedback al usuario
+  categorias: Categoria[] = [];
+  ejercicio: Ejercicio = new Ejercicio();
+  mensaje: string = '';
 
-  constructor(private svc: EjercicioService,
-              private router: Router) {}
+  constructor(private ejercicioService: EjercicioService, private router: Router) { }
 
-  guardar() {
-    this.svc.crearEjercicio(this.nuevoEjercicio).subscribe({
-      next: () => {
-        this.mensaje = 'Ejercicio creado ✅';
-        setTimeout(() => this.router.navigate(['/ejercicios']), 1000);
+  ngOnInit(): void {
+    this.ejercicioService.getCategorias().subscribe({
+      next: (categorias) => {
+        this.categorias = categorias;
       },
-      error: err => this.mensaje = 'Error: ' + err.message
+      error: (err) => {
+        this.mensaje = 'Error al cargar las categorías: ' + err.message;
+      }
     });
   }
 
-  limpiar() {
-    this.nuevoEjercicio = new Ejercicio();
-    this.mensaje = '';
+  guardarEjercicio(): void {
+    this.ejercicioService.crearEjercicio(this.ejercicio).subscribe({
+      next: (response) => {
+        this.mensaje = 'Ejercicio creado exitosamente';
+        setTimeout(() => this.router.navigate(['/ejercicios']), 1000);
+      },
+      error: (err) => {
+        this.mensaje = 'Error al crear el ejercicio: ' + err.message;
+      }
+    });
   }
+
 }

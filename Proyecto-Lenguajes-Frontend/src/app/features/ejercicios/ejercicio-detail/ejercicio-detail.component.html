@@ -1,1 +1,33 @@
-<p>ejercicio-detail works!</p>
+<div class="container">
+    <h2>Crear Ejercicio</h2>
+  
+    <div *ngIf="mensaje" class="message">{{ mensaje }}</div>
+  
+    <form (ngSubmit)="guardarEjercicio()">
+      <div class="form-group">
+        <label for="nombreEjercicio">Nombre del Ejercicio:</label>
+        <input type="text" id="nombreEjercicio" [(ngModel)]="ejercicio.nombreEjercicio" name="nombreEjercicio" class="form-control" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" [(ngModel)]="ejercicio.descripcion" name="descripcion" class="form-control" required></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="categoria">Categoría:</label>
+        <select id="categoria" [(ngModel)]="ejercicio.codCategoria" name="codCategoria" class="form-control" required>
+          <option *ngFor="let categoria of categorias" [value]="categoria.codCategoria">{{ categoria.nombreCategoria }}</option>
+        </select>
+      </div>
+         
+      <div class="form-group">
+        <label for="equipo">Equipo:</label>
+        <input type="number" id="equipo" [(ngModel)]="nuevoEjercicio.codEquipo" name="codEquipo" class="form-control" required />
+      </div>
+  
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">Crear Ejercicio</button>
+      </div>
+    </form>
+  </div>

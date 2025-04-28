@@ -1,1 +1,40 @@
-<p>ejercicio-list works!</p>
+<div class="container">
+
+    <h1>Lista de Ejercicios</h1>
+  
+    <!-- Búsqueda por ID -->
+    <div class="search-bar">
+      <input type="text" [(ngModel)]="idBuscado" placeholder="Buscar por ID..." />
+      <button (click)="buscarPorId()">Buscar</button>
+      <button (click)="restaurarLista()">Mostrar todos</button>
+    </div>
+  
+    <!-- Mensaje de error -->
+    <div *ngIf="errorMsg" class="error-message">{{ errorMsg }}</div>
+  
+    <!-- Lista de ejercicios -->
+    <ul class="exercise-list">
+      <li *ngFor="let ejercicio of ejercicios$ | async" (click)="abrirDetalle(ejercicio)">
+        <span class="exercise-name">{{ ejercicio.nombreEjercicio }}</span>
+        <span class="exercise-id">[ID: {{ ejercicio.codEjercicio }}]</span>
+      </li>
+    </ul>
+  
+    <!-- Detalle de un ejercicio -->
+    <div *ngIf="ejercicioDetalle" class="detail-panel">
+      <h2>Detalle de Ejercicio</h2>
+  
+      <p><strong>ID:</strong> {{ ejercicioDetalle.codEjercicio }}</p>
+      <p><strong>Nombre:</strong> {{ ejercicioDetalle.nombreEjercicio }}</p>
+      <p><strong>Descripción:</strong> {{ ejercicioDetalle.descripcion }}</p>
+      <p><strong>ID Categoría:</strong> {{ ejercicioDetalle.codCategoria }}</p>
+      <p><strong>ID Equipo:</strong> {{ ejercicioDetalle.codEquipo }}</p>
+  
+      <div class="detail-buttons">
+        <button (click)="eliminarDetalle()">Eliminar</button>
+        <button (click)="cerrarDetalle()">Cerrar</button>
+      </div>
+    </div>
+  
+  </div>
+  
