@@ -13,7 +13,7 @@ import { Categoria } from '../../../domain/categoria.model';
   styleUrls: ['./crear-categoria.component.css']
 })
 export class CrearCategoriaComponent {
-  categoria: Categoria = new Categoria();
+  categoria: Categoria = new Categoria(0, ''); // Inicializar con codCategoria=0
   errorMsg = '';
   successMsg = '';
 

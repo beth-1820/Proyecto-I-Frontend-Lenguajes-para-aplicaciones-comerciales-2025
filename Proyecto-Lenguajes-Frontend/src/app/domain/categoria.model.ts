@@ -1,6 +1,6 @@
 export class Categoria {
-    codCategoria?: number;
-    nombreCategoria?: string;
+    codCategoria?: number = 0;
+    nombreCategoria?: string = '';
 
     constructor(
         codCategoria?: number,
