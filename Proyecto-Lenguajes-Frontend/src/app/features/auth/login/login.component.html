@@ -1,4 +1,5 @@
-<section class="login-container">
+<section class="fullscreen-login">
+  <div class="login-container">
     <h2>Login</h2>
     <form (ngSubmit)="onSubmit()">
       <label for="idUser">ID de Usuario:</label>
@@ -10,7 +11,7 @@
         placeholder="Ingresa tu ID"
         required
       />
-  
+
       <label for="password">Contraseña:</label>
       <input
         type="password"
@@ -20,9 +21,9 @@
         placeholder="••••••"
         required
       />
-  
+
       <button type="submit">Entrar</button>
     </form>
     <p class="error" *ngIf="error">{{ error }}</p>
-  </section>
-  
+  </div>
+</section>
