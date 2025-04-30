@@ -1,0 +1,58 @@
+<section class="listado">
+    <h2>Listado de Instructores</h2>
+  
+    <!-- Barra de búsqueda -->
+    <div class="buscador">
+      <input
+        type="number"
+        [(ngModel)]="idBuscado"
+        (keyup.enter)="buscarPorId()"
+        placeholder="ID del instructor"
+      />
+      <button class="btn-primary" (click)="buscarPorId()">Buscar</button>
+      <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
+    </div>
+  
+    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
+  <!-- Tabla con columna ID -->
+  <table class="tabla" *ngIf="instructores$ | async as instructores">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th style="width: 120px">Ver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of instructores">
+        <td>{{ i.idInstructor }}</td>
+        <td>{{ i.nombreInstructor }} {{ i.apellidosInstructor }}</td>
+        <td>
+          <button class="btn-link" (click)="abrirDetalle(i)">Detalle</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- Modal DETALLE -->
+<div *ngIf="instructorDetalle" class="overlay" (click)="cerrarDetalle()">
+    <article class="card" (click)="$event.stopPropagation()">
+      <button class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
+  
+      <header class="card-header">
+        <h3>{{ instructorDetalle.nombreInstructor }} {{ instructorDetalle.apellidosInstructor }}</h3>
+      </header>
+  
+      <ul class="detalles">
+        <li><span>ID:</span> {{ instructorDetalle.idInstructor }}</li>
+        <li><span>Teléfono:</span> {{ instructorDetalle.telefonoInstructor }}</li>
+      </ul>
+  
+      <footer class="acciones">
+        <button class="btn-danger" (click)="eliminarDetalle()">Eliminar</button>
+        <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
+      </footer>
+    </article>
+  </div>

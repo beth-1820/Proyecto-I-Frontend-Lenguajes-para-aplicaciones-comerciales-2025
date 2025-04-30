@@ -6,6 +6,8 @@ import { EjercicioListComponent }  from './features/ejercicios/ejercicio-list/ej
 import { EjercicioDetailComponent }from './features/ejercicios/ejercicio-detail/ejercicio-detail.component';
 import { CategoriaListComponent } from './features/categorias/buscar-categoria/buscar-categoria.component';
 import { CrearCategoriaComponent } from './features/categorias/crear-categoria/crear-categoria.component';
+import { InstructorListComponent } from './features/instructores/instructores-list/instructor-list.component';
+
 
 export const routes: Routes = [
   //NO CAMBIAR EL ORDEN
@@ -18,6 +20,9 @@ export const routes: Routes = [
 
   { path: 'categorias/listado', component: CategoriaListComponent},
   { path: 'categorias/nuevo', component: CrearCategoriaComponent},
+
+  {path: 'instructores', component: InstructorListComponent},
+  
 
   { path: '', redirectTo: '', pathMatch: 'full' }
 ];
