@@ -50,12 +50,8 @@ private menu: MenuNavigation[]= [
     subItems: [
       {
         title:'Buscar Instructor',
-        url:'buscarInstructor/ver',
+        url:'instructores',
       },
-      {
-        title:'Lista Instructores',
-        url:'ListadoInstructores/ver',
-      }
     ]
 
   },
