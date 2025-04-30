@@ -11,6 +11,18 @@ export class MenuService {
 private menu: MenuNavigation[]= [
 
   {
+    title: 'Quienes somos',
+    icon: '',
+    url: 'home',
+    subItems: [
+      {
+        title:'Acerca de nosotros',
+        url:'home',
+      },
+    ]
+
+  },
+  {
     title: 'Catálogo de categorías',
     icon: '',
     url: 'categorias',
@@ -62,14 +74,26 @@ private menu: MenuNavigation[]= [
     subItems: [
       {
         title: 'Buscar Cliente',
-        url: 'clientes',   // si "buscar" también es el listado general
+        url: 'clientes',   
       },
       {
         title: 'Añadir Cliente',
-        url: 'clientes/nuevo',  // formulario para crear cliente
+        url: 'clientes/nuevo',  
       },
     ]
-  } 
+  },
+  {
+    title: 'Perfil',
+    icon: '',
+    url: 'login',
+    subItems: [
+      {
+      title: 'Cerrar sesión',
+      url: 'login',
+      }
+    ]
+
+  }
 ]
 
   getMenu():MenuNavigation[]{

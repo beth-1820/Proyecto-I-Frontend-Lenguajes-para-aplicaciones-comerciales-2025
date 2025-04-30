@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Cliente } from '../../../domain/cliente.model';
 import { ClienteService } from '../../../services/cliente.service';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';          // ← template-driven para atar [(ngModel)]
+import { FormsModule } from '@angular/forms';         
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-cliente-form',
   templateUrl: './cliente-form.component.html',
   styleUrls: ['./cliente-form.component.css'],
-  imports: [CommonModule, FormsModule]                 // necesita FormsModule
+  imports: [CommonModule, FormsModule]                
 })
 export class ClienteFormComponent {
 

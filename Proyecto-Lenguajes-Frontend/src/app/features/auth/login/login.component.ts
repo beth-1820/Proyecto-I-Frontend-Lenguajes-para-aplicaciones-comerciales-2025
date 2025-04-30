@@ -25,7 +25,7 @@ export class LoginComponent {
   onSubmit() {
     this.error = '';
     this.auth.login(this.idUser, this.password).subscribe({
-      next: () => this.router.navigate(['/clientes']),
+      next: () => this.router.navigate(['/home']),
       error: () => this.error = 'ID o contraseña inválidos'
     });
   }

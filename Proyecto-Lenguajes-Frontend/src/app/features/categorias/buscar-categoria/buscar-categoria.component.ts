@@ -68,7 +68,7 @@ export class CategoriaListComponent implements OnInit {
     const id = this.categoriaDetalle.codCategoria;
     this.svc.eliminarCategoria(id).subscribe({
       next: () => {
-        // refrescar lista tras borrar
+        // refresca lista cuando borra
         this.todos$ = this.svc.getCategorias();
         this.categorias$ = this.todos$;
         this.cerrarDetalle();
