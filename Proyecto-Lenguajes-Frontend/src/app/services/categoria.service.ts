@@ -22,6 +22,11 @@ export class CategoriaService {
     return this.http.get<Categoria>(`${this.url}/${id}`);
   }
 
+  /** GET categoría por NOMBRE */
+  getCategoriaPorNombre(nombre: string): Observable<Categoria> {
+    return this.http.get<Categoria>(`${this.url}/nombre/${nombre}`);
+  }
+
   /** POST nueva categoría */
   crearCategoria(categoria: Categoria): Observable<Categoria> {
     return this.http.post<Categoria>(this.url, categoria);

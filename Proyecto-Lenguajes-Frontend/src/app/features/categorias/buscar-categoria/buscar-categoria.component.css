@@ -236,6 +236,25 @@
   .btn-danger:active {
     transform: translateY(1px) scale(.97);
   }
+
+    /* Contenedor del switch */
+  .switch-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .switch-container input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+    accent-color: var(--clr-primary-500); /* Ajusta color al tema */
+  }
+
+  .switch-label {
+    font-size: 0.95rem;
+    color: var(--clr-primary-700);
+  }
   
   /* ============================================================
      ANIMACIONES

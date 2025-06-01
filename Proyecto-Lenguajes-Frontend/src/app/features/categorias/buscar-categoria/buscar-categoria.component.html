@@ -1,14 +1,29 @@
+<!-- src/app/features/categorias/buscar-categoria/buscar-categoria.component.html -->
 <section class="listado">
   <h2>Listado de Categorías</h2>
 
   <!-- ───── Barra de búsqueda ───── -->
   <div class="buscador">
-    <input type="number"
-           [(ngModel)]="idBuscado"
-           (keyup.enter)="buscarPorId()"
-           placeholder="ID de la categoría" />
+    <!-- SWITCH / CHECKBOX para alternar ID ↔ NOMBRE -->
+    <label class="switch-container">
+      <input
+        type="checkbox"
+        [(ngModel)]="buscarPorNombre"
+      />
+      <span class="switch-label">
+        {{ buscarPorNombre ? 'Buscar por Nombre' : 'Buscar por ID' }}
+      </span>
+    </label>
 
-    <button class="btn-primary" (click)="buscarPorId()">
+    <!-- Campo de búsqueda: si es por ID, tipo number; si es por nombre, tipo text -->
+    <input
+      [type]="buscarPorNombre ? 'text' : 'number'"
+      [(ngModel)]="idBuscado"
+      (keyup.enter)="buscar()"
+      [placeholder]="buscarPorNombre ? 'Nombre de la categoría' : 'ID de la categoría'"
+    />
+
+    <button class="btn-primary" (click)="buscar()">
       Buscar
     </button>
 
@@ -17,9 +32,10 @@
     </button>
   </div>
 
+  <!-- Mensaje de error si existe -->
   <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
-  <!-- ───── Tabla ───── -->
+  <!-- ───── Tabla de resultados ───── -->
   <table class="tabla" *ngIf="categorias$ | async as categorias">
     <thead>
       <tr>

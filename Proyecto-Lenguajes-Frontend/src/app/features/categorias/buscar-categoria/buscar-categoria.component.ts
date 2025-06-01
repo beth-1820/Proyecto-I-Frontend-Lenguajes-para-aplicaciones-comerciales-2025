@@ -21,6 +21,7 @@ export class CategoriaListComponent implements OnInit {
   idBuscado = '';
   errorMsg = '';
 
+  buscarPorNombre: boolean = false;
   categoriaDetalle: Categoria | null = null;
 
   constructor(private svc: CategoriaService) {}
@@ -30,21 +31,50 @@ export class CategoriaListComponent implements OnInit {
     this.categorias$ = this.todos$;
   }
 
-  buscarPorId(): void {
-    const id = Number(this.idBuscado);
-    if (!id) return;
-    this.svc.getCategoria(id).subscribe({
-      next: cat => {
-        this.categorias$ = of([cat]);
-        this.categoriaDetalle = null;
-        this.errorMsg = '';
-      },
-      error: () => {
-        this.errorMsg = `No existe categoría con ID ${id}`;
+  buscar(): void {
+    this.errorMsg = '';
+    // Si hay cadena vacía, no hacemos nada
+    if (!this.idBuscado || this.idBuscado.trim().length === 0) {
+      return;
+    }
+
+    if (this.buscarPorNombre) {
+      // BUSCAR POR NOMBRE
+      const nombre = this.idBuscado.trim();
+      this.svc.getCategoriaPorNombre(nombre).subscribe({
+        next: cat => {
+          this.categorias$ = of([cat]);
+          this.categoriaDetalle = null;
+          this.errorMsg = '';
+        },
+        error: () => {
+          this.errorMsg = `No existe categoría con nombre "${nombre}"`;
+          this.categorias$ = of([]);
+          this.categoriaDetalle = null;
+        }
+      });
+    } else {
+      // BUSCAR POR ID
+      const id = Number(this.idBuscado);
+      if (isNaN(id)) {
+        this.errorMsg = 'Ingresa un ID válido';
         this.categorias$ = of([]);
         this.categoriaDetalle = null;
+        return;
       }
-    });
+      this.svc.getCategoria(id).subscribe({
+        next: cat => {
+          this.categorias$ = of([cat]);
+          this.categoriaDetalle = null;
+          this.errorMsg = '';
+        },
+        error: () => {
+          this.errorMsg = `No existe categoría con ID ${id}`;
+          this.categorias$ = of([]);
+          this.categoriaDetalle = null;
+        }
+      });
+    }
   }
 
   restaurarLista(): void {
