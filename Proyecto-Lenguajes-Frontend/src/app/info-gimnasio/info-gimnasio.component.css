@@ -1,0 +1,39 @@
+.info-gimnasio-card {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 24px;
+  background-color: #fefefe;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.info-gimnasio-card .logo {
+  display: block;
+  margin: 0 auto 16px;
+  width: 120px;
+}
+
+.info-gimnasio-card h2 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 16px;
+}
+
+.info-gimnasio-card p, .info-gimnasio-card li {
+  color: #333;
+  margin: 6px 0;
+}
+
+.info-gimnasio-card ul {
+  padding-left: 20px;
+}
+
+.info-gimnasio-card a {
+  color: #0077cc;
+  text-decoration: none;
+}
+
+.info-gimnasio-card a:hover {
+  text-decoration: underline;
+}

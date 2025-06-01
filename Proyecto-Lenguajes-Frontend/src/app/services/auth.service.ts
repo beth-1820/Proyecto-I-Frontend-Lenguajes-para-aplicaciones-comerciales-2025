@@ -17,7 +17,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  /** Ahora recibe el número de usuario y la contraseña */
   login(idUser: number, password: string) {
     return this.http
       .post<LoginResp>(`${this.base}/login`, { idUser, password })

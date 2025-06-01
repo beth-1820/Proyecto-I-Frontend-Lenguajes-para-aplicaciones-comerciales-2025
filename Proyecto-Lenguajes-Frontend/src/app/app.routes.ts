@@ -11,6 +11,8 @@ import { EjercicioDetailComponent }                from './features/ejercicios/e
 import { CategoriaListComponent }                  from './features/categorias/buscar-categoria/buscar-categoria.component';
 import { CrearCategoriaComponent }                 from './features/categorias/crear-categoria/crear-categoria.component';
 import { InstructorListComponent }                 from './features/instructores/instructores-list/instructor-list.component';
+import { InfoGimnasioComponent } from './info-gimnasio/info-gimnasio.component';
+
 import { HomeComponent } from './features/home/home.component';
 
 export const routes: Routes = [
@@ -30,6 +32,8 @@ export const routes: Routes = [
 
   { path: 'instructores',          component: InstructorListComponent,  canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
+  { path: 'info-gimnasio', component: InfoGimnasioComponent, canActivate: [AuthGuard] },
+
 
   // 3) Redirects por defecto
   { path: '',     redirectTo: 'login', pathMatch: 'full' },
