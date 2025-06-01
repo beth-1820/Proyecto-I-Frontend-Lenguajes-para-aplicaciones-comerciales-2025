@@ -19,10 +19,11 @@ import { Instructor } from '../domain/instructor.model';
     }
   
  
-    getInstructor(id: number): Observable<Instructor> {
-      return this.http.get<Instructor>(`${this.url}/${id}`);
-    }
-  
+getInstructorByIdYNombre(id: number, nombre: string): Observable<Instructor> {
+  const params = new HttpParams().set('nombre', nombre);
+  return this.http.get<Instructor>(`${this.url}/${id}`, { params });
+}
+
 
   
    
@@ -37,4 +38,3 @@ import { Instructor } from '../domain/instructor.model';
   
     
   }
-  

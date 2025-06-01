@@ -3,17 +3,23 @@
   
     <!-- Barra de búsqueda -->
     <div class="buscador">
-      <input
-        type="number"
-        [(ngModel)]="idBuscado"
-        (keyup.enter)="buscarPorId()"
-        placeholder="ID del instructor"
-      />
-      <button class="btn-primary" (click)="buscarPorId()">Buscar</button>
-      <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
-    </div>
-  
-    <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+  <input
+    type="number"
+    [(ngModel)]="idBuscado"
+    placeholder="ID del instructor"
+  />
+  <input
+    type="text"
+    [(ngModel)]="nombreBuscado"
+    placeholder="Nombre del instructor"
+    (keyup.enter)="buscar()"
+  />
+  <button class="btn-primary" (click)="buscar()">Buscar</button>
+  <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
+</div>
+
+<p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
+
 
   <!-- Tabla con columna ID -->
   <table class="tabla" *ngIf="instructores$ | async as instructores">

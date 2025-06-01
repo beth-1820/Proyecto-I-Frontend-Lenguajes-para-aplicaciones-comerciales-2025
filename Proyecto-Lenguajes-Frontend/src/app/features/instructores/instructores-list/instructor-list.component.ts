@@ -20,6 +20,7 @@ import { Instructor }            from '../../../domain/instructor.model';
     private todos$!: Observable<Instructor[]>;
     instructores$!: Observable<Instructor[]>;
     idBuscado = '';
+    nombreBuscado = '';
     errorMsg  = '';
   
     /* ─── Modal DETALLE ─── */
@@ -36,23 +37,32 @@ import { Instructor }            from '../../../domain/instructor.model';
       this.instructores$ = this.todos$;
     }
   
-    /* ─── Listado & búsqueda ─── */
-    buscarPorId(): void {
-      const id = Number(this.idBuscado);
-      if (!id) return;
-      this.svc.getInstructor(id).subscribe({
-        next: i => {
-          this.instructores$      = of([i]);
-          this.instructorDetalle = null;
-          this.errorMsg       = '';
-        },
-        error: () => {
-          this.errorMsg       = `No existe cliente con ID ${id}`;
-          this.instructores$      = of([]);
-          this.instructorDetalle = null;
-        }
-      });
+    buscar(): void {
+  const id = Number(this.idBuscado.trim());
+  const nombre = this.nombreBuscado.trim();
+
+  if (id <= 0 && !nombre) {
+    this.errorMsg = 'Debe ingresar al menos un ID o un nombre';
+    this.instructores$ = of([]);
+    this.instructorDetalle = null;
+    return;
+  }
+
+  this.svc.getInstructorByIdYNombre(id > 0 ? id : 0, nombre).subscribe({
+    next: i => {
+      this.instructores$ = of([i]);
+      this.instructorDetalle = null;
+      this.errorMsg = '';
+    },
+    error: () => {
+      const criterio = id > 0 ? `ID ${id}` : `nombre "${nombre}"`;
+      this.errorMsg = `No existe instructor con ${criterio}`;
+      this.instructores$ = of([]);
+      this.instructorDetalle = null;
     }
+  });
+}
+
   
     restaurarLista(): void {
       this.instructores$      = this.todos$;
@@ -70,19 +80,22 @@ import { Instructor }            from '../../../domain/instructor.model';
       this.instructorDetalle = null;
     }
   
-    eliminarDetalle(): void {
-      if (!this.instructorDetalle?.idInstructor) return;
-      const id = this.instructorDetalle.idInstructor;
-      this.svc.eliminarInstructor(id).subscribe({
-        next: () => {
-          this.todos$    = this.svc.getInstructores();
-          this.instructores$ = this.todos$;
-          this.cerrarDetalle();
-        },
-        error: err => this.errorMsg = 'Error al eliminar: ' + err.message
-      });
-    }
-  
+eliminarDetalle(): void {
+  if (!this.instructorDetalle?.idInstructor) return;
+
+  const confirmar = confirm('¿Está seguro que desea eliminar este instructor?');
+  if (!confirmar) return;
+
+  const id = this.instructorDetalle.idInstructor;
+  this.svc.eliminarInstructor(id).subscribe({
+    next: () => {
+      this.todos$ = this.svc.getInstructores();
+      this.instructores$ = this.todos$;
+      this.cerrarDetalle();
+    },
+    error: err => this.errorMsg = 'Error al eliminar: ' + err.message
+  });
+}
+
 
   }
-  
