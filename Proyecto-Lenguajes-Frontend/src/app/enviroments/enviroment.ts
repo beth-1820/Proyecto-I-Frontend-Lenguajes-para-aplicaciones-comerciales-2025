@@ -1,5 +1,4 @@
 export const environment = {
-    production: false, //Esta la agregue, revisen, si falla la eliminan
-    API_URL: 'http://localhost:8080/vitalitycenter/api/'
-  };
-  
+  production: false,
+  API_URL: 'https://proyecto-i-backend-lenguajes-para-aplicaciones-c-production.up.railway.app/vitalitycenter/api/'
+};
