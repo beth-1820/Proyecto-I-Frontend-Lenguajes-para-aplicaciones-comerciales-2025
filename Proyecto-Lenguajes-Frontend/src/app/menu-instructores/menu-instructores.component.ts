@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { MenuInstructoresService } from '../menu-instructores.service';
+import { MenuInstructoresService } from '../services/menu-instructores.service';
 
 @Component({
   selector: 'app-menu-instructores',
