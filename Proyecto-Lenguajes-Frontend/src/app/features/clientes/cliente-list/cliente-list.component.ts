@@ -42,7 +42,6 @@ export class ClienteListComponent implements OnInit {
     this.clientes$ = this.todos$;
   }
 
-  
   buscarCliente(): void {
     const valor = this.idBuscado.trim();
 

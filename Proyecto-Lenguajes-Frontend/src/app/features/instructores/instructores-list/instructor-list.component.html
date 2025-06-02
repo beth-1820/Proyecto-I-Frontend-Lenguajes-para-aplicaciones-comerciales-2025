@@ -1,37 +1,22 @@
 <section class="listado">
-    <h2>Listado de Instructores</h2>
-  
-  <!-- ───── Barra de búsqueda ───── -->
+  <h2>Listado de Instructores</h2>
+
+  <!-- Barra de búsqueda unificada -->
   <div class="buscador">
-    <!-- SWITCH / CHECKBOX para alternar ID ↔ NOMBRE -->
-    <label class="switch-container">
-      <input
-        type="checkbox"
-        [(ngModel)]="buscarPorNombre"
-      />
-      <span class="switch-label">
-        {{ buscarPorNombre ? 'Buscar por Nombre' : 'Buscar por ID' }}
-      </span>
-    </label>
-
-    <!-- Campo de búsqueda: si es por ID, tipo number; si es por nombre, tipo text -->
     <input
-      [type]="buscarPorNombre ? 'text' : 'number'"
+      type="text"
       [(ngModel)]="idBuscado"
-      (keyup.enter)="buscar()"
-      [placeholder]="buscarPorNombre ? 'Nombre del instructor' : 'ID de la instructor'"
+      (keyup.enter)="buscarInstructor()"
+      placeholder="Nombre o ID del instructor"
     />
+    <button class="btn-primary" (click)="buscarInstructor()">Buscar</button>
+    <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
+  </div>
 
-    <button class="btn-primary" (click)="buscar()">
-      Buscar
-    </button>
-  <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
-</div>
+  <!-- Mensaje de error -->
+  <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
-<p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
-
-
-  <!-- Tabla con columna ID -->
+  <!-- Tabla con instructores -->
   <table class="tabla" *ngIf="instructores$ | async as instructores">
     <thead>
       <tr>
@@ -52,23 +37,23 @@
   </table>
 </section>
 
-<!-- Modal DETALLE -->
+<!-- Modal de Detalle -->
 <div *ngIf="instructorDetalle" class="overlay" (click)="cerrarDetalle()">
-    <article class="card" (click)="$event.stopPropagation()">
-      <button class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
-  
-      <header class="card-header">
-        <h3>{{ instructorDetalle.nombreInstructor }} {{ instructorDetalle.apellidosInstructor }}</h3>
-      </header>
-  
-      <ul class="detalles">
-        <li><span>ID:</span> {{ instructorDetalle.idInstructor }}</li>
-        <li><span>Teléfono:</span> {{ instructorDetalle.telefonoInstructor }}</li>
-      </ul>
-  
-      <footer class="acciones">
-        <button class="btn-danger" (click)="eliminarDetalle()">Eliminar</button>
-        <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
-      </footer>
-    </article>
-  </div>
+  <article class="card" (click)="$event.stopPropagation()">
+    <button class="close" aria-label="Cerrar" (click)="cerrarDetalle()">×</button>
+
+    <header class="card-header">
+      <h3>{{ instructorDetalle.nombreInstructor }} {{ instructorDetalle.apellidosInstructor }}</h3>
+    </header>
+
+    <ul class="detalles">
+      <li><span>ID:</span> {{ instructorDetalle.idInstructor }}</li>
+      <li><span>Teléfono:</span> {{ instructorDetalle.telefonoInstructor }}</li>
+    </ul>
+
+    <footer class="acciones">
+      <button class="btn-danger" (click)="eliminarDetalle()">Eliminar</button>
+      <button class="btn-primary" (click)="cerrarDetalle()">Cerrar</button>
+    </footer>
+  </article>
+</div>
