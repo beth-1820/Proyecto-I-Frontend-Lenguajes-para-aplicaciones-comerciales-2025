@@ -20,10 +20,15 @@ import { Instructor } from '../domain/instructor.model';
     }
   
  
-getInstructorByIdYNombre(id: number, nombre: string): Observable<Instructor> {
-  const params = new HttpParams().set('nombre', nombre);
-  return this.http.get<Instructor>(`${this.url}/${id}`, { params });
-}
+  /** GET categoría por ID */
+  getInstructor(id: number): Observable<Instructor> {
+    return this.http.get<Instructor>(`${this.url}/${id}`);
+  }
+
+  /** GET categoría por NOMBRE */
+  getInstructorPorNombre(nombre: string): Observable<Instructor> {
+    return this.http.get<Instructor>(`${this.url}/nombre/${nombre}`);
+  }
 
 
   

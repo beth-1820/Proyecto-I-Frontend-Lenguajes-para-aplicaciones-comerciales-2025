@@ -20,7 +20,7 @@ import { Instructor }            from '../../../domain/instructor.model';
     private todos$!: Observable<Instructor[]>;
     instructores$!: Observable<Instructor[]>;
     idBuscado = '';
-    nombreBuscado = '';
+   buscarPorNombre: boolean = false;
     errorMsg  = '';
   
     /* ─── Modal DETALLE ─── */
@@ -37,32 +37,51 @@ import { Instructor }            from '../../../domain/instructor.model';
       this.instructores$ = this.todos$;
     }
   
-    buscar(): void {
-  const id = Number(this.idBuscado.trim());
-  const nombre = this.nombreBuscado.trim();
-
-  if (id <= 0 && !nombre) {
-    this.errorMsg = 'Debe ingresar al menos un ID o un nombre';
-    this.instructores$ = of([]);
-    this.instructorDetalle = null;
-    return;
-  }
-
-  this.svc.getInstructorByIdYNombre(id > 0 ? id : 0, nombre).subscribe({
-    next: i => {
-      this.instructores$ = of([i]);
-      this.instructorDetalle = null;
-      this.errorMsg = '';
-    },
-    error: () => {
-      const criterio = id > 0 ? `ID ${id}` : `nombre "${nombre}"`;
-      this.errorMsg = `No existe instructor con ${criterio}`;
-      this.instructores$ = of([]);
-      this.instructorDetalle = null;
+   buscar(): void {
+    this.errorMsg = '';
+    // Si hay cadena vacía, no hacemos nada
+    if (!this.idBuscado || this.idBuscado.trim().length === 0) {
+      return;
     }
-  });
-}
 
+    if (this.buscarPorNombre) {
+      // BUSCAR POR NOMBRE
+      const nombre = this.idBuscado.trim();
+      this.svc.getInstructorPorNombre(nombre).subscribe({
+        next: inst => {
+          this.instructores$ = of([inst]);
+          this.instructorDetalle = null;
+          this.errorMsg = '';
+        },
+        error: () => {
+          this.errorMsg = `No existe instructor con nombre "${nombre}"`;
+          this.instructores$ = of([]);
+          this.instructorDetalle = null;
+        }
+      });
+    } else {
+      // BUSCAR POR ID
+      const id = Number(this.idBuscado);
+      if (isNaN(id)) {
+        this.errorMsg = 'Ingresa un ID válido';
+        this.instructores$ = of([]);
+        this.instructorDetalle = null;
+        return;
+      }
+      this.svc.getInstructor(id).subscribe({
+        next: inst => {
+          this.instructores$ = of([inst]);
+          this.instructorDetalle = null;
+          this.errorMsg = '';
+        },
+        error: () => {
+          this.errorMsg = `No existe categoría con ID ${id}`;
+          this.instructores$ = of([]);
+          this.instructorDetalle = null;
+        }
+      });
+    }
+  }
   
     restaurarLista(): void {
       this.instructores$      = this.todos$;

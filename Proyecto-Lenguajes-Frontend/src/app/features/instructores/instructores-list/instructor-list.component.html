@@ -1,20 +1,30 @@
 <section class="listado">
     <h2>Listado de Instructores</h2>
   
-    <!-- Barra de búsqueda -->
-    <div class="buscador">
-  <input
-    type="number"
-    [(ngModel)]="idBuscado"
-    placeholder="ID del instructor"
-  />
-  <input
-    type="text"
-    [(ngModel)]="nombreBuscado"
-    placeholder="Nombre del instructor"
-    (keyup.enter)="buscar()"
-  />
-  <button class="btn-primary" (click)="buscar()">Buscar</button>
+  <!-- ───── Barra de búsqueda ───── -->
+  <div class="buscador">
+    <!-- SWITCH / CHECKBOX para alternar ID ↔ NOMBRE -->
+    <label class="switch-container">
+      <input
+        type="checkbox"
+        [(ngModel)]="buscarPorNombre"
+      />
+      <span class="switch-label">
+        {{ buscarPorNombre ? 'Buscar por Nombre' : 'Buscar por ID' }}
+      </span>
+    </label>
+
+    <!-- Campo de búsqueda: si es por ID, tipo number; si es por nombre, tipo text -->
+    <input
+      [type]="buscarPorNombre ? 'text' : 'number'"
+      [(ngModel)]="idBuscado"
+      (keyup.enter)="buscar()"
+      [placeholder]="buscarPorNombre ? 'Nombre del instructor' : 'ID de la instructor'"
+    />
+
+    <button class="btn-primary" (click)="buscar()">
+      Buscar
+    </button>
   <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
 </div>
 
