@@ -7,13 +7,15 @@ import { ItemRutinaEjercicio } from '../../../domain/itemRutinaEjercicio.model';
 import { Cliente } from '../../../domain/cliente.model';
 import { Instructor } from '../../../domain/instructor.model';
 
+
 import { RutinaService } from '../../../services/rutina.service';
 
 @Component({
   selector: 'app-crear-rutina',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './crear-rutina.component.html'
+  templateUrl: './crear-rutina.component.html',
+  styleUrls: ['./crear-rutina.component.css']
 })
 export class CrearRutinaComponent implements OnInit {
   rutina: Rutina = new Rutina();

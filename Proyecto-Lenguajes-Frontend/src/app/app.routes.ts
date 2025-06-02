@@ -17,7 +17,7 @@ import { HomeComponent }                           from './features/home/home.co
 import { MenuInstructoresComponent }               from './features/menu-instructores/menu-instructores.component';
 import { EditarRutinaComponent }                   from './features/rutina/editar-rutina/editar-rutina.component';
 import { GenerarReporteComponent }                 from './features/reporte/generar-reporte/generar-reporte.component';
-
+import { MostrarRutinasComponent }                 from './features/rutina/mostrar-rutina/mostrar-rutinas.component'; // ← NUEVO
 
 export const routes: Routes = [
   // 1) Login (público)
@@ -37,7 +37,9 @@ export const routes: Routes = [
 
   { path: 'instructores',          component: InstructorListComponent,  canActivate: [AuthGuard] },
 
-  { path: 'rutinas',               component: CrearRutinaComponent,     canActivate: [AuthGuard] },
+  { path: 'rutina/nuevo',          component: CrearRutinaComponent,  canActivate: [AuthGuard] },
+  { path: 'rutinas',               component: MostrarRutinasComponent,  canActivate: [AuthGuard] },
+  { path: 'rutinas/editar/:id',    component: EditarRutinaComponent, canActivate: [AuthGuard] }, // ← Ruta para editar
   { path: 'rutinas/editar/:id',    component: EditarRutinaComponent,    canActivate: [AuthGuard] },
 
   { path: 'reportes',              component: GenerarReporteComponent,  canActivate: [AuthGuard] },
