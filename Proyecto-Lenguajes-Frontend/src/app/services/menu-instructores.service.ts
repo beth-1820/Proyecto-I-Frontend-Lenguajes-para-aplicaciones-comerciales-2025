@@ -19,43 +19,52 @@ export class MenuInstructoresService {
     return [
       { 
         label: 'Ejercicios', 
-        route: '/ejercicios',
+        route: '/ejercicios'/*,
         subItems: [
           { label: 'Crear ejercicio', route: '/ejercicios/crear' },
           { label: 'Lista de ejercicios', route: '/ejercicios/lista' }
         ]
+        */
       },
       { 
         label: 'Categorías', 
-        route: '/categorias',
+        route: '/categorias'/*,
         subItems: [
           { label: 'Nueva categoría', route: '/categorias/nueva' },
           { label: 'Ver categorías', route: '/categorias/lista' }
         ]
+          */
       },
       { 
         label: 'Rutinas', 
-        route: '/rutinas',
+        route: '/rutinas'/*,
         subItems: [
           { label: 'Crear rutina', route: '/rutinas/crear' },
           { label: 'Mis rutinas', route: '/rutinas/lista' }
         ]
+          */
       },
       { 
         label: 'Clientes', 
-        route: '/clientes',
+        route: '/clientes'/*,
         subItems: [
           { label: 'Registrar cliente', route: '/clientes/registrar' },
           { label: 'Lista de clientes', route: '/clientes/lista' }
         ]
+          */
       },
       { 
         label: 'Reportes', 
-        route: '/reportes',
+        route: '/reportes'/*,
         subItems: [
           { label: 'Generar reporte', route: '/reportes/generar' },
           { label: 'Reportes anteriores', route: '/reportes/historial' }
         ]
+          */
+      },
+      {
+        label: 'Cerrar Sesion',
+        route: '/login'
       }
     ];
   }
