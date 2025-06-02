@@ -1,9 +1,9 @@
-import { Component }      from '@angular/core';
-import { CommonModule }   from '@angular/common';
-import { FormsModule }    from '@angular/forms';
-import { RouterModule,
-         Router }         from '@angular/router';
-import { AuthService }    from '../../../services/auth.service';
+// login.component.ts
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   standalone: true,
@@ -15,7 +15,7 @@ import { AuthService }    from '../../../services/auth.service';
 export class LoginComponent {
   idUser!: number;
   password = '';
-  error    = '';
+  error = '';
 
   constructor(
     private auth: AuthService,
@@ -25,8 +25,13 @@ export class LoginComponent {
   onSubmit() {
     this.error = '';
     this.auth.login(this.idUser, this.password).subscribe({
-      next: () => this.router.navigate(['/home']),
-      error: () => this.error = 'ID o contraseña inválidos'
+      next: (response) => {
+        // La redirección ahora se maneja en el AuthService
+      },
+      error: (err) => {
+        this.error = 'ID o contraseña inválidos';
+        console.error('Error en el login:', err);
+      }
     });
   }
 }

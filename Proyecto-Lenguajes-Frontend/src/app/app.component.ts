@@ -1,35 +1,30 @@
+// app.component.ts
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { CommonModule } from '@angular/common'; // 👈 IMPORTANTE
+import { CommonModule } from '@angular/common';
+import { RouterOutlet, Router } from '@angular/router';
 import { ShareModule } from './shared/share/share.module';
 import { MenuInstructoresComponent } from './menu-instructores/menu-instructores.component';
-import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ShareModule, MenuInstructoresComponent], // 👈 AGREGA CommonModule
+  imports: [CommonModule, RouterOutlet, ShareModule, MenuInstructoresComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private auth: AuthService
+  ) {}
+
+  shouldShowHeader(): boolean {
+    return this.auth.isLoggedIn() && this.auth.getUserRole() === 'admin';
+  }
 
   shouldShowInstructorMenu(): boolean {
-    const currentRoute = this.router.url;
-    const hiddenRoutes = [
-      '/clientes',
-      '/clientes/nuevo',
-      '/ejercicios',
-      '/ejercicios/nuevo',
-      '/ejercicios/editar',
-      '/categorias/listado',
-      '/categorias/nuevo',
-      '/instructores',
-      '/home',
-      '/menu-instructores'
-    ];
-    return !hiddenRoutes.some(route => currentRoute.startsWith(route));
+    return this.auth.isLoggedIn() && this.auth.getUserRole() === 'instructor';
   }
 
   title = 'Proyecto-Lenguajes-Frontend';
