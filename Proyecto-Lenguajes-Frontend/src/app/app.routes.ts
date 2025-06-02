@@ -11,10 +11,10 @@ import { EjercicioDetailComponent }                from './features/ejercicios/e
 import { CategoriaListComponent }                  from './features/categorias/buscar-categoria/buscar-categoria.component';
 import { CrearCategoriaComponent }                 from './features/categorias/crear-categoria/crear-categoria.component';
 import { InstructorListComponent }                 from './features/instructores/instructores-list/instructor-list.component';
-import { InfoGimnasioComponent } from './info-gimnasio/info-gimnasio.component';
+import { InfoGimnasioComponent } from './features/info-gimnasio/info-gimnasio.component';
 
 import { HomeComponent } from './features/home/home.component';
-import { MenuInstructoresComponent } from './menu-instructores/menu-instructores.component';
+import { MenuInstructoresComponent } from './features/menu-instructores/menu-instructores.component';
 export const routes: Routes = [
   // 1) Login (público)
   { path: 'login', component: LoginComponent },
