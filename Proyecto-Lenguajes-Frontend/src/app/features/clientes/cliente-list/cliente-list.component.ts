@@ -42,7 +42,7 @@ export class ClienteListComponent implements OnInit {
     this.clientes$ = this.todos$;
   }
 
-  // NUEVO: búsqueda por ID o nombre
+  
   buscarCliente(): void {
     const valor = this.idBuscado.trim();
 

@@ -42,7 +42,7 @@ export class ClienteService {
     return this.http.post<void>(`${this.url}/${idCliente}/medidas`, valores);
   }
 
-  // NUEVO: búsqueda por nombre
+
   buscarPorNombre(nombre: string): Observable<Cliente[]> {
     return this.http.get<Cliente[]>(`${this.url}/buscar?nombre=${nombre}`);
   }
