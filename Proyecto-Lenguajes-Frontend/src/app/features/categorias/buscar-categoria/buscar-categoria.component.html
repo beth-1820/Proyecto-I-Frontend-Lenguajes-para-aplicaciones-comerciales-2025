@@ -40,22 +40,27 @@
   <table class="tabla" *ngIf="categorias$ | async as categorias">
     <thead>
       <tr>
+        <th style="width: 80px">ID</th>
         <th>Nombre</th>
-        <th style="width: 120px">Ver</th>
+        <th style="width: 120px">Eliminar</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let c of categorias">
+        <td>{{ c.codCategoria }}</td>
         <td>{{ c.nombreCategoria }}</td>
         <td>
-          <button class="btn-link" (click)="abrirDetalle(c)">Detalle</button>
+          <!-- Llamar a confirmarEliminar en lugar de eliminarDirecto -->
+          <button class="btn-danger" (click)="confirmarEliminar(c)">
+            Eliminar
+          </button>
         </td>
       </tr>
     </tbody>
   </table>
 </section>
 
-<!-- Overlay detalle -->
+<!-- Overlay detalle (opcional) -->
 <div *ngIf="categoriaDetalle" class="overlay" (click)="cerrarDetalle()">
   <article class="card" (click)="$event.stopPropagation()">
 
@@ -65,9 +70,7 @@
       <h3>{{ categoriaDetalle.nombreCategoria }}</h3>
     </header>
 
-    <ul class="detalles">
-      <li><span>ID:</span> {{ categoriaDetalle.codCategoria }}</li>
-    </ul>
+    <ul class="detalles"></ul>
 
     <footer class="acciones">
       <button class="btn-danger" (click)="eliminarDetalle()">Eliminar</button>

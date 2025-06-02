@@ -33,13 +33,11 @@ export class CategoriaListComponent implements OnInit {
 
   buscar(): void {
     this.errorMsg = '';
-    // Si hay cadena vacía, no hacemos nada
     if (!this.idBuscado || this.idBuscado.trim().length === 0) {
       return;
     }
 
     if (this.buscarPorNombre) {
-      // BUSCAR POR NOMBRE
       const nombre = this.idBuscado.trim();
       this.svc.getCategoriaPorNombre(nombre).subscribe({
         next: cat => {
@@ -54,7 +52,6 @@ export class CategoriaListComponent implements OnInit {
         }
       });
     } else {
-      // BUSCAR POR ID
       const id = Number(this.idBuscado);
       if (isNaN(id)) {
         this.errorMsg = 'Ingresa un ID válido';
@@ -92,13 +89,12 @@ export class CategoriaListComponent implements OnInit {
     this.categoriaDetalle = null;
   }
 
-  /** Elimina la categoría y recarga la lista */
+  /** Elimina la categoría desde el modal (si se usa el modal) */
   eliminarDetalle(): void {
     if (!this.categoriaDetalle?.codCategoria) return;
     const id = this.categoriaDetalle.codCategoria;
     this.svc.eliminarCategoria(id).subscribe({
       next: () => {
-        // refresca lista cuando borra
         this.todos$ = this.svc.getCategorias();
         this.categorias$ = this.todos$;
         this.cerrarDetalle();
@@ -109,6 +105,35 @@ export class CategoriaListComponent implements OnInit {
     });
   }
 
+  /**
+   * Antes de eliminar desde tabla, muestra confirmación.
+   */
+  confirmarEliminar(cat: Categoria): void {
+    const nombre = cat.nombreCategoria;
+    if (window.confirm(`¿Está seguro que desea eliminar la categoría "${nombre}"?`)) {
+      this.eliminarDesdeTabla(cat);
+    }
+  }
+
+  /** Elimina la categoría directamente desde la fila de la tabla */
+  eliminarDesdeTabla(cat: Categoria): void {
+    if (!cat.codCategoria) return;
+    const id = cat.codCategoria;
+    this.svc.eliminarCategoria(id).subscribe({
+      next: () => {
+        // Refrescar lista completa tras eliminar
+        this.todos$ = this.svc.getCategorias();
+        this.categorias$ = this.todos$;
+        this.errorMsg = '';
+      },
+      error: err => {
+        this.errorMsg = 'Error al eliminar: ' + err.message;
+      }
+    });
+  }
+
   @HostListener('document:keydown.escape')
-  onEsc() { this.cerrarDetalle(); }
+  onEsc() {
+    this.cerrarDetalle();
+  }
 }
