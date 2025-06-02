@@ -12,6 +12,7 @@ import { CategoriaListComponent }                  from './features/categorias/b
 import { CrearCategoriaComponent }                 from './features/categorias/crear-categoria/crear-categoria.component';
 import { InstructorListComponent }                 from './features/instructores/instructores-list/instructor-list.component';
 import { InfoGimnasioComponent } from './features/info-gimnasio/info-gimnasio.component';
+import { CrearRutinaComponent  } from './features/rutina/crear-rutina/crear-rutina.component';
 
 import { HomeComponent } from './features/home/home.component';
 import { MenuInstructoresComponent } from './features/menu-instructores/menu-instructores.component';
@@ -31,6 +32,7 @@ export const routes: Routes = [
   { path: 'categorias/nuevo',      component: CrearCategoriaComponent,  canActivate: [AuthGuard] },
 
   { path: 'instructores',          component: InstructorListComponent,  canActivate: [AuthGuard] },
+  { path: 'rutinas',               component: CrearRutinaComponent,  canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
 
   { path: 'info-gimnasio', component: InfoGimnasioComponent, canActivate: [AuthGuard] },

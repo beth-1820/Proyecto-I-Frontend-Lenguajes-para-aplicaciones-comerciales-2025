@@ -1,0 +1,64 @@
+<h2>Crear Rutina</h2>
+
+<div *ngIf="mensaje" class="alert alert-success">{{ mensaje }}</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+<form (ngSubmit)="guardarRutina()" #form="ngForm">
+  <div>
+    <label>Objetivo del cliente:</label>
+    <input [(ngModel)]="rutina.objetivoCliente" name="objetivoCliente" required />
+  </div>
+
+  <div>
+    <label>Enfermedades del cliente:</label>
+    <input [(ngModel)]="rutina.enfermedadesCliente" name="enfermedadesCliente" />
+  </div>
+
+  <div>
+    <label>ID Cliente:</label>
+    <input type="number" [(ngModel)]="rutina.idCliente" name="idCliente" required />
+  </div>
+
+  <div>
+    <label>ID Instructor:</label>
+    <input type="number" [(ngModel)]="rutina.idInstructor" name="idInstructor" required />
+  </div>
+
+  <div>
+    <label>Fecha de creación:</label>
+    <input type="date" [(ngModel)]="rutina.fechaCreacion" name="fechaCreacion" required />
+  </div>
+
+  <div>
+    <label>Fecha de renovación:</label>
+    <input type="date" [(ngModel)]="rutina.fechaRenovacion" name="fechaRenovacion" />
+  </div>
+
+  <h3>Agregar Ejercicio</h3>
+  <div>
+    <label>Código del ejercicio:</label>
+    <input type="number" [(ngModel)]="nuevoEjercicio.codEjercicio" name="codEjercicio" required />
+  </div>
+
+  <div>
+    <label>Series:</label>
+    <input type="number" [(ngModel)]="nuevoEjercicio.seriesEjercicio" name="seriesEjercicio" required />
+  </div>
+
+  <div>
+    <label>Repeticiones:</label>
+    <input type="number" [(ngModel)]="nuevoEjercicio.repeticionesEjercicio" name="repeticionesEjercicio" required />
+  </div>
+
+  <button type="button" (click)="agregarEjercicio()">Agregar Ejercicio</button>
+
+  <ul>
+    <li *ngFor="let ej of ejercicios; let i = index">
+      Ejercicio {{ ej.codEjercicio }} - Series: {{ ej.seriesEjercicio }} - Repeticiones: {{ ej.repeticionesEjercicio }}
+      <button type="button" (click)="eliminarEjercicio(i)">Eliminar</button>
+    </li>
+  </ul>
+
+  <br />
+  <button type="submit">Guardar Rutina</button>
+</form>
