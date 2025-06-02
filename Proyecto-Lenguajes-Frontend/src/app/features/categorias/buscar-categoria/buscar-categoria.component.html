@@ -1,21 +1,22 @@
-<!-- src/app/features/categorias/buscar-categoria/buscar-categoria.component.html -->
 <section class="listado">
   <h2>Listado de Categorías</h2>
 
   <!-- ───── Barra de búsqueda ───── -->
   <div class="buscador">
-    <!-- SWITCH / CHECKBOX para alternar ID ↔ NOMBRE -->
-    <label class="switch-container">
+
+    <!-- ─── Toggle Switch con texto debajo ─── -->
+    <label class="switch">
       <input
         type="checkbox"
         [(ngModel)]="buscarPorNombre"
       />
-      <span class="switch-label">
-        {{ buscarPorNombre ? 'Buscar por Nombre' : 'Buscar por ID' }}
+      <span class="slider"></span>
+      <span class="switch-text">
+        {{ buscarPorNombre ? 'Por Nombre' : 'Por ID' }}
       </span>
     </label>
 
-    <!-- Campo de búsqueda: si es por ID, tipo number; si es por nombre, tipo text -->
+    <!-- Campo de búsqueda dinámico -->
     <input
       [type]="buscarPorNombre ? 'text' : 'number'"
       [(ngModel)]="idBuscado"
