@@ -1,32 +1,50 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; // 👈 Necesario para ngModel y ngForm
-import { CommonModule } from '@angular/common'; // 👈 Necesario para *ngIf, *ngFor, etc.
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 import { Rutina } from '../../../domain/rutina.model';
 import { ItemRutinaEjercicio } from '../../../domain/itemRutinaEjercicio.model';
+import { Cliente } from '../../../domain/cliente.model';
+import { Instructor } from '../../../domain/instructor.model';
+
 import { RutinaService } from '../../../services/rutina.service';
 
 @Component({
   selector: 'app-crear-rutina',
-  standalone: true, // 👈 Indica que este componente no depende de un NgModule
-  imports: [CommonModule, FormsModule], // 👈 Importación de módulos necesarios
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './crear-rutina.component.html'
 })
-export class CrearRutinaComponent {
-  rutina: Rutina = new Rutina(0, '', new Date(), new Date(), '', '', 0, 0);
+export class CrearRutinaComponent implements OnInit {
+  rutina: Rutina = new Rutina();
   ejercicios: ItemRutinaEjercicio[] = [];
-  nuevoEjercicio: ItemRutinaEjercicio = new ItemRutinaEjercicio(0, 0, 0, 0, 0);
+  nuevoEjercicio: ItemRutinaEjercicio = new ItemRutinaEjercicio();
 
-  mensaje: string = '';
-  error: string = '';
+  clientes: Cliente[] = [];
+  instructores: Instructor[] = [];
+
+  mensaje = '';
+  error = '';
 
   constructor(private rutinaService: RutinaService) {}
 
-  agregarEjercicio() {
-    const { codEjercicio, seriesEjercicio, repeticionesEjercicio } = this.nuevoEjercicio;
+  ngOnInit(): void {
+    this.rutina.fechaCreacion = new Date();
+    this.rutina.fechaRenovacion = new Date();
 
-    if (codEjercicio > 0 && seriesEjercicio > 0 && repeticionesEjercicio > 0) {
+    this.rutinaService.obtenerClientes().subscribe(clientes => {
+      this.clientes = clientes;
+    });
+
+    this.rutinaService.obtenerInstructores().subscribe(instructores => {
+      this.instructores = instructores;
+    });
+  }
+
+  agregarEjercicio() {
+    if (this.nuevoEjercicio.codEjercicio && this.nuevoEjercicio.seriesEjercicio && this.nuevoEjercicio.repeticionesEjercicio) {
       this.ejercicios.push({ ...this.nuevoEjercicio });
-      this.nuevoEjercicio = new ItemRutinaEjercicio(0, 0, 0, 0, 0);
+      this.nuevoEjercicio = new ItemRutinaEjercicio();
     } else {
       this.error = 'Debe completar todos los campos del ejercicio con valores válidos.';
     }
@@ -40,26 +58,23 @@ export class CrearRutinaComponent {
     this.mensaje = '';
     this.error = '';
 
+    if (!this.rutina.cliente || !this.rutina.instructor) {
+      this.error = 'Debe seleccionar un cliente e instructor.';
+      return;
+    }
+
     if (this.ejercicios.length === 0) {
       this.error = 'Debe agregar al menos un ejercicio.';
       return;
     }
 
-    this.rutinaService.crearRutina(this.rutina).subscribe({
-      next: (codRutina: number) => {
-        const tareas = this.ejercicios.map(ej => {
-          ej.codRutina = codRutina;
-          return this.rutinaService.agregarItemEjercicio(ej).toPromise();
-        });
+    // Asociar ejercicios directamente a la rutina
+    this.rutina.ejercicios = this.ejercicios;
 
-        Promise.all(tareas)
-          .then(() => {
-            this.mensaje = 'Rutina y ejercicios creados exitosamente';
-            this.resetearFormulario();
-          })
-          .catch(err => {
-            this.error = 'Error al guardar los ejercicios: ' + err.message;
-          });
+    this.rutinaService.crearRutina(this.rutina).subscribe({
+      next: () => {
+        this.mensaje = 'Rutina y ejercicios creados exitosamente';
+        this.resetearFormulario();
       },
       error: err => {
         this.error = 'Error al guardar la rutina: ' + err.message;
@@ -68,8 +83,11 @@ export class CrearRutinaComponent {
   }
 
   resetearFormulario() {
-    this.rutina = new Rutina(0, '', new Date(), new Date(), '', '', 0, 0);
+    this.rutina = new Rutina({
+      fechaCreacion: new Date(),
+      fechaRenovacion: new Date()
+    });
     this.ejercicios = [];
-    this.nuevoEjercicio = new ItemRutinaEjercicio(0, 0, 0, 0, 0);
+    this.nuevoEjercicio = new ItemRutinaEjercicio();
   }
 }
