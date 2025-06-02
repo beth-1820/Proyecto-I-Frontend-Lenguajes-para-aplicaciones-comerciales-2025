@@ -17,16 +17,13 @@ import { ClienteMedidaValor } from '../../../domain/clienteMedidaValor';
 })
 export class ClienteListComponent implements OnInit {
 
-  /* ─── Listado ─── */
   private todos$!: Observable<Cliente[]>;
   clientes$!: Observable<Cliente[]>;
   idBuscado = '';
   errorMsg  = '';
 
-  /* ─── Modal DETALLE ─── */
   clienteDetalle: Cliente | null = null;
 
-  /* ─── Modal MEDIDAS ─── */
   showMedidasModal = false;
   medidasLabels = [
     'Bíceps','Tríceps','Antebrazo','Pecho',
@@ -36,7 +33,6 @@ export class ClienteListComponent implements OnInit {
   medidasValores: ClienteMedidaValor[] = [];
   private selectedCliente: Cliente | null = null;
 
-  /* ─── Toast éxito ─── */
   showSuccess = false;
 
   constructor(private svc: ClienteService) {}
@@ -46,22 +42,39 @@ export class ClienteListComponent implements OnInit {
     this.clientes$ = this.todos$;
   }
 
-  /* ─── Listado & búsqueda ─── */
-  buscarPorId(): void {
-    const id = Number(this.idBuscado);
-    if (!id) return;
-    this.svc.getCliente(id).subscribe({
-      next: c => {
-        this.clientes$      = of([c]);
-        this.clienteDetalle = null;
-        this.errorMsg       = '';
-      },
-      error: () => {
-        this.errorMsg       = `No existe cliente con ID ${id}`;
-        this.clientes$      = of([]);
-        this.clienteDetalle = null;
-      }
-    });
+  // NUEVO: búsqueda por ID o nombre
+  buscarCliente(): void {
+    const valor = this.idBuscado.trim();
+
+    if (/^\d+$/.test(valor)) {
+      const id = Number(valor);
+      this.svc.getCliente(id).subscribe({
+        next: c => {
+          this.clientes$ = of([c]);
+          this.clienteDetalle = null;
+          this.errorMsg = '';
+        },
+        error: () => {
+          this.errorMsg = `No existe cliente con ID ${id}`;
+          this.clientes$ = of([]);
+          this.clienteDetalle = null;
+        }
+      });
+    } else if (valor.length > 0) {
+      this.svc.buscarPorNombre(valor).subscribe({
+        next: clientes => {
+          this.clientes$ = of(clientes);
+          this.clienteDetalle = null;
+          this.errorMsg = clientes.length === 0 ? `No hay coincidencias con "${valor}"` : '';
+        },
+        error: () => {
+          this.errorMsg = `Error al buscar por nombre`;
+          this.clientes$ = of([]);
+        }
+      });
+    } else {
+      this.errorMsg = 'Ingrese un nombre o un ID válido';
+    }
   }
 
   restaurarLista(): void {
@@ -71,7 +84,6 @@ export class ClienteListComponent implements OnInit {
     this.idBuscado      = '';
   }
 
-  /* ─── Detalle ─── */
   abrirDetalle(c: Cliente): void {
     this.clienteDetalle = c;
   }
@@ -93,18 +105,16 @@ export class ClienteListComponent implements OnInit {
     });
   }
 
-  /* ─── Medidas ─── */
   verMedidas(): void {
     if (!this.clienteDetalle) return;
     this.selectedCliente = this.clienteDetalle;
     this.cerrarDetalle();
 
     const id = this.selectedCliente.idCliente!;
-    // inicializa con null
     this.medidasValores = this.medidasLabels.map((_, i) =>
       new ClienteMedidaValor(id, i + 1, null)
     );
-    // carga las que existan
+
     this.svc.getMedidas(id).subscribe(list => {
       list.forEach(saved => {
         const idx = this.medidasValores.findIndex(
@@ -125,8 +135,6 @@ export class ClienteListComponent implements OnInit {
   actualizarMedidas(): void {
     if (!this.selectedCliente) return;
     const id = this.selectedCliente.idCliente!;
-
-    // Filtra para enviar solo las medidas con valor != null
     const payload = this.medidasValores.filter(m => m.valor !== null);
 
     this.svc.updateMedidas(id, payload).subscribe({

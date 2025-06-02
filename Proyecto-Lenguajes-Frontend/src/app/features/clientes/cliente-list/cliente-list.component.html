@@ -1,17 +1,18 @@
 <section class="listado">
   <h2>Listado de Clientes</h2>
 
-  <!-- Barra de búsqueda -->
-  <div class="buscador">
-    <input
-      type="number"
-      [(ngModel)]="idBuscado"
-      (keyup.enter)="buscarPorId()"
-      placeholder="ID del cliente"
-    />
-    <button class="btn-primary" (click)="buscarPorId()">Buscar</button>
-    <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
-  </div>
+ <!-- Barra de búsqueda -->
+<div class="buscador">
+  <input
+    type="text"
+    [(ngModel)]="idBuscado"
+    (keyup.enter)="buscarCliente()"
+    placeholder="Nombre o ID del cliente"
+  />
+  <button class="btn-primary" (click)="buscarCliente()">Buscar</button>
+  <button class="btn-primary" (click)="restaurarLista()">Restaurar lista</button>
+</div>
+
 
   <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
