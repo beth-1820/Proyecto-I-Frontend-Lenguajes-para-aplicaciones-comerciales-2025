@@ -14,7 +14,7 @@ import { InstructorListComponent }                 from './features/instructores
 import { InfoGimnasioComponent } from './info-gimnasio/info-gimnasio.component';
 
 import { HomeComponent } from './features/home/home.component';
-
+import { MenuInstructoresComponent } from './menu-instructores/menu-instructores.component';
 export const routes: Routes = [
   // 1) Login (público)
   { path: 'login', component: LoginComponent },
@@ -32,7 +32,10 @@ export const routes: Routes = [
 
   { path: 'instructores',          component: InstructorListComponent,  canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent },
+
   { path: 'info-gimnasio', component: InfoGimnasioComponent, canActivate: [AuthGuard] },
+
+  { path: 'menu-instructores', component: MenuInstructoresComponent },
 
 
   // 3) Redirects por defecto

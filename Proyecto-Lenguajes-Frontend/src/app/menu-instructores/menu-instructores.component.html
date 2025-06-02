@@ -1,0 +1,27 @@
+<div class="menu-wrapper">
+  <div class="menu-container">
+    <div class="gym-header">
+      <h1>Vitality Center</h1>
+    </div>
+
+    <nav class="nav-bar">
+      <div class="nav-item" *ngFor="let item of menuItems">
+        <a [routerLink]="item.route" 
+           routerLinkActive="active-link"
+           (click)="toggleDropdown(item.label, $event)">
+          {{ item.label }}
+          <span class="dropdown-icon">▼</span>
+        </a>
+        <div class="dropdown-content" *ngIf="item.subItems && activeDropdown === item.label">
+          <a *ngFor="let subItem of item.subItems" 
+             [routerLink]="subItem.route"
+             (click)="closeDropdowns()">
+            {{ subItem.label }}
+          </a>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<div class="content-spacer"></div>

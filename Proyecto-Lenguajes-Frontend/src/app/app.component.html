@@ -1,6 +1,6 @@
 <!-- src/app/app.component.html -->
- <app-header></app-header>
-
+<app-menu-instructores *ngIf="shouldShowInstructorMenu()"></app-menu-instructores>
+<app-header></app-header>
 
 <main class="container">
   <router-outlet></router-outlet>

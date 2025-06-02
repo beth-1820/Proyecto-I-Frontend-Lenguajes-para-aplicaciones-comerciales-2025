@@ -1,0 +1,146 @@
+/* Contenedor wrapper para centrar */
+.menu-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 1000;
+  background: #0d47a1;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Contenedor principal */
+.menu-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Encabezado del gimnasio */
+.gym-header {
+  background-color: #0d47a1;
+  color: white;
+  padding: 15px 0;
+  text-align: center;
+}
+
+.gym-header h1 {
+  margin: 0;
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+
+/* Barra de navegación principal */
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  background-color: #1565c0;
+  padding: 10px 0;
+  width: 100%;
+}
+
+/* Items de navegación */
+.nav-item {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-bar > .nav-item > a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+}
+
+.nav-bar > .nav-item > a:hover {
+  background-color: #1e88e5;
+}
+
+.nav-bar > .nav-item > a.active-link {
+  background-color: #42a5f5;
+  font-weight: bold;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.dropdown-icon {
+  font-size: 10px;
+  margin-left: 5px;
+  transition: transform 0.3s;
+}
+
+.nav-item:hover .dropdown-icon,
+.active-link .dropdown-icon {
+  transform: rotate(180deg);
+}
+
+/* Dropdown content */
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f9f9f9;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 0 0 4px 4px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  background-color: white;
+  transition: all 0.3s;
+}
+
+.dropdown-content a:hover {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+/* Espacio para el contenido */
+.content-spacer {
+  height: 150px;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-bar {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .nav-item {
+    width: 100%;
+    margin: 5px 0;
+  }
+  
+  .nav-bar > .nav-item > a {
+    width: 100%;
+    margin: 0;
+    padding: 12px 0;
+    display: block;
+  }
+  
+  .dropdown-content {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+  }
+  
+  .content-spacer {
+    height: 200px;
+  }
+}
