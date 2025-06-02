@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common'; // 👈 IMPORTANTE
 import { ShareModule } from './shared/share/share.module';
 import { MenuInstructoresComponent } from './menu-instructores/menu-instructores.component';
 import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ShareModule, MenuInstructoresComponent],
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, ShareModule, MenuInstructoresComponent], // 👈 AGREGA CommonModule
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-constructor(private router: Router) {}
+  constructor(private router: Router) {}
 
   shouldShowInstructorMenu(): boolean {
     const currentRoute = this.router.url;
-    
-    // Rutas donde NO debe mostrarse el menú de instructores
     const hiddenRoutes = [
       '/clientes',
       '/clientes/nuevo',
@@ -28,16 +29,8 @@ constructor(private router: Router) {}
       '/home',
       '/menu-instructores'
     ];
-    
-    // Verifica si la ruta actual comienza con alguna de las rutas ocultas
     return !hiddenRoutes.some(route => currentRoute.startsWith(route));
   }
 
-
-
-
-
   title = 'Proyecto-Lenguajes-Frontend';
 }
-
-
