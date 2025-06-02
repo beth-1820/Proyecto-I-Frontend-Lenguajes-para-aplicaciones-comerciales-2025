@@ -1,0 +1,149 @@
+<!-- src/app/features/reporte/generar-reporte/generar-reporte.component.html -->
+
+<div class="container p-4">
+  <h2>Generar Reporte de Rutina por Cliente</h2>
+
+  <!-- Select de clientes -->
+  <div class="mb-4 select-wrapper">
+    <label for="clienteSelect">Seleccione un cliente:</label>
+    <select
+      id="clienteSelect"
+      [(ngModel)]="selectedClienteId"
+      (ngModelChange)="onClienteChange()"
+      class="select-field"
+    >
+      <option [ngValue]="undefined" disabled>-- Elija un cliente --</option>
+      <option *ngFor="let c of clientes" [ngValue]="c.idCliente">
+        {{ c.nombreCliente }} {{ c.apellidosCliente }}
+      </option>
+    </select>
+  </div>
+
+  <!-- Mensajes de estado -->
+  <div *ngIf="cargando" class="text-gray-600">Cargando datos...</div>
+  <div *ngIf="errorMensaje" class="text-red-500">{{ errorMensaje }}</div>
+
+  <!-- Reporte completo -->
+  <div *ngIf="reporte" id="reporte-wrapper">
+
+    <!-- Tarjeta: Detalles de la Rutina -->
+    <div class="card">
+      <div class="card-header">Detalles de la Rutina</div>
+      <div class="card-body">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="field-group">
+            <strong>Código de Rutina:</strong>
+            {{ reporte.rutina.codRutina }}
+          </div>
+          <div class="field-group">
+            <strong>Fecha de Creación:</strong>
+            {{ reporte.rutina.fechaCreacion | date: 'dd/MM/yyyy' }}
+          </div>
+          <div class="field-group">
+            <strong>Fecha de Renovación:</strong>
+            {{ reporte.rutina.fechaRenovacion | date: 'dd/MM/yyyy' }}
+          </div>
+          <div class="field-group col-span-2">
+            <strong>Objetivo del Cliente:</strong>
+            {{ reporte.rutina.objetivoCliente }}
+          </div>
+          <div class="field-group col-span-2">
+            <strong>Enfermedades / Restricciones:</strong>
+            {{ reporte.rutina.enfermedadesCliente }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta: Datos del Cliente -->
+    <div class="card">
+      <div class="card-header">Datos del Cliente</div>
+      <div class="card-body">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="field-group">
+            <strong>ID:</strong>
+            {{ reporte.rutina.cliente?.idCliente }}
+          </div>
+          <div class="field-group">
+            <strong>Nombre Completo:</strong>
+            {{ reporte.rutina.cliente?.nombreCliente }}
+            {{ reporte.rutina.cliente?.apellidosCliente }}
+          </div>
+          <div class="field-group">
+            <strong>Fecha de Nacimiento:</strong>
+            {{ reporte.rutina.cliente?.fechaNacimiento | date: 'dd/MM/yyyy' }}
+          </div>
+          <div class="field-group">
+            <strong>Teléfono:</strong>
+            {{ reporte.rutina.cliente?.telefonoCliente }}
+          </div>
+          <div class="field-group col-span-2">
+            <strong>Dirección:</strong> {{ reporte.rutina.cliente?.direccion }}
+          </div>
+          <div class="field-group">
+            <strong>Contacto de Emergencia:</strong>
+            {{ reporte.rutina.cliente?.nombreContactoEmergencia }}
+          </div>
+          <div class="field-group">
+            <strong>Tel. Emergencia:</strong>
+            {{ reporte.rutina.cliente?.telContactoEmergencia }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta: Datos del Instructor -->
+    <div class="card">
+      <div class="card-header">Datos del Instructor</div>
+      <div class="card-body">
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div class="field-group">
+            <strong>ID:</strong>
+            {{ reporte.rutina.instructor?.idInstructor }}
+          </div>
+          <div class="field-group">
+            <strong>Nombre Completo:</strong>
+            {{ reporte.rutina.instructor?.nombreInstructor }}
+            {{ reporte.rutina.instructor?.apellidosInstructor }}
+          </div>
+          <div class="field-group col-span-2">
+            <strong>Teléfono:</strong> {{ reporte.rutina.instructor?.telefonoInstructor }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tarjeta: Ítems de Ejercicio -->
+    <div class="card">
+      <div class="card-header">Ejercicios de la Rutina</div>
+      <div class="card-body">
+        <table>
+          <thead>
+            <tr>
+              <th># Item</th>
+              <th>Series</th>
+              <th>Repeticiones</th>
+              <th>Código Ejercicio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of reporte.ejercicios; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ item.seriesEjercicio }}</td>
+              <td>{{ item.repeticionesEjercicio }}</td>
+              <td>{{ item.codEjercicio }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Botón para imprimir -->
+    <div class="print-button-wrapper">
+      <button class="print-button" (click)="imprimirReporte()">
+        Imprimir Reporte
+      </button>
+    </div>
+
+  </div>
+</div>

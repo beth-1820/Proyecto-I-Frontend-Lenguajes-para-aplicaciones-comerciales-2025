@@ -92,17 +92,25 @@ export class ClienteListComponent implements OnInit {
   }
 
   eliminarDetalle(): void {
-    if (!this.clienteDetalle?.idCliente) return;
-    const id = this.clienteDetalle.idCliente;
-    this.svc.eliminarCliente(id).subscribe({
-      next: () => {
-        this.todos$    = this.svc.getClientes();
-        this.clientes$ = this.todos$;
-        this.cerrarDetalle();
-      },
-      error: err => this.errorMsg = 'Error al eliminar: ' + err.message
-    });
+  if (!this.clienteDetalle?.idCliente) return;
+
+  const nombre = `${this.clienteDetalle.nombreCliente} ${this.clienteDetalle.apellidosCliente}`;
+  const confirmado = window.confirm(`¿Está seguro que desea eliminar al cliente "${nombre}"?`);
+
+  if (!confirmado) {
+    return;
   }
+
+  const id = this.clienteDetalle.idCliente;
+  this.svc.eliminarCliente(id).subscribe({
+    next: () => {
+      this.todos$    = this.svc.getClientes();
+      this.clientes$ = this.todos$;
+      this.cerrarDetalle();
+    },
+    error: err => this.errorMsg = 'Error al eliminar: ' + err.message
+  });
+}
 
   verMedidas(): void {
     if (!this.clienteDetalle) return;

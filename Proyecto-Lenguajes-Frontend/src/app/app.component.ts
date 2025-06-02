@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, Router } from '@angular/router';
 import { ShareModule } from './shared/share/share.module';
-import { MenuInstructoresComponent } from './menu-instructores/menu-instructores.component';
+import { MenuInstructoresComponent } from './features/menu-instructores/menu-instructores.component';
 import { AuthService } from './services/auth.service';
 
 @Component({

@@ -144,3 +144,31 @@
     height: 200px;
   }
 }
+.gym-header {
+  display: flex;
+  justify-content: center; /* centra horizontalmente */
+  align-items: center;     /* centra verticalmente */
+  gap: 15px;
+  background-color: #0d47a1;
+  color: white;
+  padding: 15px 30px;
+}
+
+.gym-header::before {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 120px;
+  background-image: url('/logo2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.gym-header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: bold;
+  user-select: none;
+}

@@ -1,0 +1,65 @@
+<div class="container">
+  <h2>Editar Rutina</h2>
+
+  <form (ngSubmit)="guardarCambios()">
+
+    <div>
+      <label>Cliente:</label>
+      <input type="text" [value]="rutina.cliente?.nombreCliente + ' ' + rutina.cliente?.apellidosCliente" disabled />
+    </div>
+
+    <div>
+      <label>Instructor:</label>
+      <input type="text" [value]="rutina.instructor?.nombreInstructor + ' ' + rutina.instructor?.apellidosInstructor" disabled />
+    </div>
+
+    <div>
+      <label>Fecha Creación:</label>
+      <input type="date" [(ngModel)]="rutina.fechaCreacion" name="fechaCreacion" required />
+    </div>
+
+    <div>
+      <label>Fecha Renovación:</label>
+      <input type="date" [(ngModel)]="rutina.fechaRenovacion" name="fechaRenovacion" required />
+    </div>
+
+    <div>
+      <label>Objetivo del Cliente:</label>
+      <input type="text" [(ngModel)]="rutina.objetivoCliente" name="objetivoCliente" required />
+    </div>
+
+    <div>
+      <label>Enfermedades:</label>
+      <input type="text" [(ngModel)]="rutina.enfermedadesCliente" name="enfermedadesCliente" />
+    </div>
+
+    <hr />
+
+    <h3>Ejercicios</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID Ejercicio</th>
+          <th>Series</th>
+          <th>Repeticiones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ej of ejercicios; let i = index">
+          <td>{{ ej.codEjercicio }}</td>
+          <td>
+            <input type="number" [(ngModel)]="ej.seriesEjercicio" name="seriesEjercicio{{i}}" min="1" required />
+          </td>
+          <td>
+            <input type="number" [(ngModel)]="ej.repeticionesEjercicio" name="repeticionesEjercicio{{i}}" min="1" required />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="error" class="error">{{ error }}</div>
+    <div *ngIf="mensaje" class="mensaje">{{ mensaje }}</div>
+
+    <button type="submit">Guardar Cambios</button>
+  </form>
+</div>

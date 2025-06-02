@@ -1,6 +1,6 @@
 <section class="fullscreen-login">
   <div class="login-container">
-    <h2>Login</h2>
+    <h1 class="gym-title">Vitality Fitness Center</h1>
     <form (ngSubmit)="onSubmit()">
       <label for="idUser">ID de Usuario:</label>
       <input
@@ -22,7 +22,7 @@
         required
       />
 
-      <button type="submit">Entrar</button>
+      <button type="submit">Iniciar sesión</button>
     </form>
     <p class="error" *ngIf="error">{{ error }}</p>
   </div>

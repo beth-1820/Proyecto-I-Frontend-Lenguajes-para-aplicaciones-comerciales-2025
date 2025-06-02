@@ -61,3 +61,26 @@
     border-radius: 5px;
   }
   
+  .welcome {
+  display: flex;
+  align-items: center;  /* centra verticalmente texto e imagen */
+  justify-content: center; /* centra el conjunto horizontalmente */
+  gap: 15px; /* espacio entre texto e imagen */
+  text-align: center;
+  font-size: 55px;
+  font-weight: bold;
+  margin: 20px 0;
+  color: #0d47a1;
+}
+
+.welcome::before {
+  content: "";
+  display: block;
+  width: 120px;   /* tamaño de la imagen */
+  height: 120px;
+  background-image: url('/logo2.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  flex-shrink: 0;
+}
